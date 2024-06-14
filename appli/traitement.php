@@ -1,6 +1,9 @@
 <?php
     session_start();
 
+
+    // var_dump($id);die;
+
     if(isset($_GET['action'])){
         switch($_GET['action']){
             case "add":
@@ -22,26 +25,36 @@
                     $erreur = "valeur d'entrée incorrecte, veuillé réessayer";
                     $_SESSION['messages'] = $erreur;
                 }
+                header("Location:index.php");
                 break;
             case "delete":
-                foreach($_SESSION['products'] as $id => $produit){
-                    if ($_POST[$index] == $id){
-                        unset($_SESSION['products'][$id]);
-                    }
-                }
-                $suppression = $produit['name']." supprimé";
+                $suppression = $_SESSION['products'][$_GET["id"]]['name']." supprimé";
                 $_SESSION['messages'] = $suppression;
+                unset($_SESSION['products'][$_GET["id"]]);
+                header("Location:recap.php");
                 break;
             case "clear":
-                foreach($_SESSION['products'] as $id => $produit){
-                    unset($_SESSION['products'][$id]);
+                if(isset($_SESSION['products'])){
+                    unset($_SESSION['products']);
                 }
                 $suppression ="tableau vidé";
                 $_SESSION['messages'] = $suppression;
+                header("Location:recap.php");
+                break;
+            case "up-qtt":
+                $_SESSION["products"][$_GET["id"]]["qtt"]++;
+                header("Location:recap.php");
+                break;
+            case "down-qtt":
+                $_SESSION["products"][$_GET["id"]]["qtt"]--;
+                if ($_SESSION["products"][$_GET["id"]]["qtt"] == 0){
+                    $suppression = $_SESSION['products'][$_GET["id"]]['name']." supprimé";
+                    $_SESSION['messages'] = $suppression;
+                    unset($_SESSION['products'][$_GET["id"]]);
+                }
+                header("Location:recap.php");
                 break;
 
 
         }
     }
-
-header("Location:index.php");
