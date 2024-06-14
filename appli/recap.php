@@ -38,7 +38,7 @@
                     "<td>".$index."</td>",
                     "<td>".$product['name']."</td>",
                     "<td>".number_format($product['price'],2,",","&nbsp;")."&nbsp;€</td>",
-                    "<td><input type='button' name='plus".$index."' value='-'>".$product['qtt']."<input type='button' name='moins".$index."' value='+'></td>",
+                    "<td><form action='traitement.php?action=up-qtt' method='post'><input type='button' name='plus".$index."' value='-'></form>".$product['qtt']."<form action='traitement.php?action=down-qtt' method='post'><input type='button' name='moins".$index."' value='+'></form></td>",
                     "<td>".number_format($product['total'],2,",","&nbsp;")."&nbsp;€</td>",
                     "</tr>";
                 $totalGeneral+= $product['total'];

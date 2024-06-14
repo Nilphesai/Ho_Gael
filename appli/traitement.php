@@ -4,7 +4,7 @@
     if(isset($_GET['action'])){
         switch($_GET['action']){
             case "add":
-                $name = filter_input(INPUT_POST, "name", FILTER_SANITIZE_SPECIAL_CHARS);
+                $name = htmlspecialchars(filter_input(INPUT_POST, "name"));
                 $price = filter_input(INPUT_POST, "price", FILTER_VALIDATE_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
                 $qtt = filter_input(INPUT_POST, "qtt", FILTER_VALIDATE_INT);
                 if($name && $price && $qtt){//tant que ce n'est pas négatif ou null
