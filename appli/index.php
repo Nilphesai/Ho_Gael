@@ -45,6 +45,20 @@
             <input type="submit" name="submit" value="Ajouter le produit">
         </p>
     </form>
-    <?php echo $_SESSION["messages"]; ?>
+    <form action="index.php" method="POST" enctype="multipart/form-data">
+        <label for="file">Fichier</label>
+        <input type="file" name="file">
+        <button type="submit">Enregistrer</button>
+    </form>
+
+    <?php 
+    $tmpName = $_FILES['file']['tmp_name'];
+    $name = $_FILES['file']['name'];
+    $size = $_FILES['file']['size'];
+    $error = $_FILES['file']['error'];
+    var_dump($_POST);
+    var_dump($_FILES);
+    move_uploaded_file($tmpName, './upload/'.$name);
+    echo $_SESSION["messages"]; ?>
 </body>
 </html>
