@@ -1,5 +1,11 @@
 <?php
     session_start();
+    if (isset($_SESSION['products'])){
+        $compteur = "(".count($_SESSION['products']).");";
+    }
+    else{
+        $compteur = "";
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,11 +18,11 @@
 <body>
     <header>
         <a href="http://localhost/Ho_Gael/appli/index.php">acceuil</a>
-        <a href="http://localhost/Ho_Gael/appli/recap.php">Vos commandes <?php echo "(".count($_SESSION['products']).")";?></a>
+        <a href="http://localhost/Ho_Gael/appli/recap.php">Vos commandes <?php echo $compteur ?></a>
     </header>
 
     <h1>Ajouter un produit</h1>
-    <form action="traitement.php?action=add" method="post">
+    <form action="traitement.php?action=add" method="post" enctype="multipart/form-data">
         <p>
             <label>
                 Nom du produit :
@@ -35,10 +41,17 @@
                 <input type="number" name="qtt" value="1">
             </label>
         </p>
+        <label for="file">Fichier</label>
+        <input type="file" name="file">
         <p>
             <input type="submit" name="submit" value="Ajouter le produit">
         </p>
+        
     </form>
-    <?php echo $_SESSION["messages"]; ?>
+
+    <?php 
+    if(isset($_SESSION['messages'])){
+        echo $_SESSION["messages"];
+        } ?>
 </body>
 </html>
