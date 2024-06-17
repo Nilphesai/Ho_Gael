@@ -1,0 +1,9 @@
+button {
+    Width: 100%;
+    margin-bottom: 10px;
+}
+i {
+    position: relative;
+    right: 22px;
+    bottom: 8px;
+}
