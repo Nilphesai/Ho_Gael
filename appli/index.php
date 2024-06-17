@@ -25,7 +25,6 @@
     <header>
         <a href="http://localhost/Ho_Gael/appli/index.php">acceuil</a>
         <a href="http://localhost/Ho_Gael/appli/recap.php">Vos commandes <?php echo $compteur ?></a>
-        <a href="http://localhost/Ho_Gael/appli/recap.php">Vos commandes <?php echo $compteur ?></a>
     </header>
 
     <h1>Ajouter un produit</h1>
