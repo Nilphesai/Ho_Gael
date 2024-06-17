@@ -49,8 +49,10 @@
                     $_SESSION['messages'] = $erreur;
                 }
                 header("Location:index.php");
+                header("Location:index.php");
                 break;
             case "delete":
+                $suppression = $_SESSION['products'][$_GET["id"]]['name']." supprimé";
                 $suppression = $_SESSION['products'][$_GET["id"]]['name']." supprimé";
                 $_SESSION['messages'] = $suppression;
                 unlink("./upload/".$_SESSION['products'][$_GET["id"]]['image']);

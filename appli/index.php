@@ -6,6 +6,12 @@
     else{
         $compteur = "";
     }
+    if (isset($_SESSION['products'])){
+        $compteur = "(".count($_SESSION['products']).");";
+    }
+    else{
+        $compteur = "";
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,6 +24,7 @@
 <body>
     <header>
         <a href="http://localhost/Ho_Gael/appli/index.php">acceuil</a>
+        <a href="http://localhost/Ho_Gael/appli/recap.php">Vos commandes <?php echo $compteur ?></a>
         <a href="http://localhost/Ho_Gael/appli/recap.php">Vos commandes <?php echo $compteur ?></a>
     </header>
 
