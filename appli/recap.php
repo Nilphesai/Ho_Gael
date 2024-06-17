@@ -70,7 +70,10 @@
     <input type="submit" name="clear" value="Enlever tout les produits">
     </p>
     </form>
-    <?php echo $_SESSION["messages"]; ?>
+    <?php 
+    if(isset($_SESSION['messages'])){
+        echo $_SESSION["messages"];
+        } ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
