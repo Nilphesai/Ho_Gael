@@ -11,8 +11,8 @@ delBtn.addEventListener('click', function(){
 function countTask(){
     const countCard = document.querySelector('#count'); //l'element count
     const listTask = tasksContainer.querySelectorAll('.todoCard');//tous les todoCard dans tasksContainer
-    for (let i = 0;i <= listTask.length();i++){//pour tous les element de listTask
-        countCard.innerText = "task = "+i; //écrire dans countCard
+    for (let i = 1;i <= listTask.length;i++){//pour tous les element de listTask
+        countCard.innerHTML = "task = "+i; //écrire dans countCard
     }
 }
 
@@ -32,4 +32,5 @@ function addTask(){
 
 function deleteTask(task){
     task.remove();
+    countTask();
 }
