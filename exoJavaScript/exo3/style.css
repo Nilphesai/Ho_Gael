@@ -23,6 +23,13 @@ main{
     align-items: center;
     justify-content: center;
     font-family: 'Times New Roman';
+    transition: 1s;
+}
+
+.active {
+    background-color: rgb(240, 30, 30);
+    transform: rotate(360deg) scale(0.9);
+    transition: 1s;
 }
 
 #blue{
