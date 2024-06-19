@@ -1,0 +1,47 @@
+#wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+main{
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.carre{
+    display: flex;
+    flex-direction: column;
+	width:100px;
+	height:100px;
+    margin: 10px;
+    background-color: green;
+    color: rgb(255,255,255);
+    align-items: center;
+    justify-content: center;
+    font-family: 'Times New Roman';
+    transition: 1s;
+}
+
+.carre p{
+    visibility: hidden;
+}
+
+#facebook{
+    background-color: blue;
+}
+#twitter{
+    background-color: rgb(110, 110, 230);
+}
+#instagram{
+    background-color: purple;
+}
+
+img {
+    width:30px;
+    height:30px;
+}
