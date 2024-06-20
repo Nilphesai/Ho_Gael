@@ -1,11 +1,8 @@
+const euro = document.getElementById("euro");
 
-document.getElementById("euro").stepUp();
-const euro = document.getElementById("#euro");
-
-document.getElementById("#euro").value = 0;
-
-euro.addEventListener("keydown",() => {
-    console.log(euro.value);
-    let francs = document.getElementById("#francs");
-    francs.innerHTML = "résultat"+euro;
+euro.addEventListener("keyup",() => {
+    const valeur = euro.value;
+    const change = valeur * 6.55957;
+    francs = document.getElementById("francs");
+    francs.innerHTML = change.toFixed(2)+ " francs";
  });
