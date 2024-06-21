@@ -121,6 +121,13 @@ WHERE recipe.id_recipe NOT IN (SELECT recipe.id_recipe
 GROUP BY recipe_name
 
 16- Afficher la / les recette(s) les plus rapides à préparer
+
+SELECT recipe_name, preparation_time
+FROM recipe
+WHERE preparation_time = (SELECT MIN(preparation_time)
+							FROM recipe)
+
+
 17- Trouver les recettes qui ne nécessitent aucun ingrédient (par exemple la recette de la tasse d’eau 
 chaude qui consiste à verser de l’eau chaude dans une tasse)
 18- Trouver les ingrédients qui sont utilisés dans au moins 3 recettes
