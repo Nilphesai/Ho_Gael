@@ -52,6 +52,13 @@ SET recipe_name = 'salade de fruit automne'
 WHERE id_recipe = 3;
 
 7- Supprimer la recette n°2 de la base de données
+
+DELETE FROM recipe_ingredients
+WHERE id_recipe = 2;
+
+DELETE FROM recipe
+WHERE id_recipe = 2;
+
 8- Afficher le prix total de la recette n°5
 9- Afficher le détail de la recette n°5 (liste des ingrédients, quantités et prix)
 10- Ajouter un ingrédient en base de données : Poivre, unité : cuillère à café, prix : 2.5 €
