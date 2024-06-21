@@ -151,5 +151,11 @@ HAVING COUNT(ingredient.id_ingredient) >= 3;
 
 19- Ajouter un nouvel ingrédient à une recette spécifique
 
+INSERT INTO ingredient (ingredient_name,unity,price)
+VALUE ('miel','L',10);
+
+INSERT INTO recipe_ingredients (quantity,id_ingredient,id_recipe)
+VALUE (0.2,27,3);
+
 20- Bonus : Trouver la recette la plus coûteuse de la base de données (il peut y avoir des ex aequo, il est 
 donc exclu d’utiliser la clause LIMIT
