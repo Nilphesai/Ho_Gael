@@ -88,6 +88,12 @@ SET price = 1.05
 WHERE id_ingredient = 12;
 
 12- Afficher le nombre de recettes par catégories : X entrées, Y plats, Z desserts
+
+SELECT category_name, SUM() AS nbCategorie
+FROM recipe
+INNER JOIN category ON recipe.id_category = category.id_category
+GROUP BY recipe.id_category
+
 13- Afficher les recettes qui contiennent l’ingrédient « Poulet »
 14- Mettez à jour toutes les recettes en diminuant leur temps de préparation de 5 minutes 
 15- Afficher les recettes qui ne nécessitent pas d’ingrédients coûtant plus de 2€ par unité de mesure
