@@ -1,11 +1,18 @@
 1- Afficher toutes les recettes disponibles (nom de la recette, catégorie et temps de préparation) triées 
 de façon décroissante sur la durée de réalisation
 
-SELECT recipe_name, id_category, preparation_time
+SELECT recipe_name, category_name, preparation_time
 FROM recipe
+INNER JOIN category ON recipe.id_category = category.id_category
 ORDER BY preparation_time DESC
 
 2- En modifiant la requête précédente, faites apparaître le nombre d’ingrédients nécessaire par recette.
+
+SELECT recipe_name, preparation_time, COUNT(recipe_name)
+FROM recipe
+INNER JOIN recipe_ingredients ON recipe.id_recipe = recipe_ingredients.id_recipe
+GROUP BY recipe.id_recipe
+ORDER BY preparation_time DESC
 
 3- Afficher les recettes qui nécessitent au moins 30 min de préparation
 4- Afficher les recettes dont le nom contient le mot « Salade » (peu importe où est situé le mot en 
