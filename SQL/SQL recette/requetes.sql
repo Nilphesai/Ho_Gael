@@ -95,8 +95,31 @@ INNER JOIN category ON recipe.id_category = category.id_category
 GROUP BY recipe.id_category
 
 13- Afficher les recettes qui contiennent l’ingrédient « Poulet »
+
+SELECT recipe_name
+FROM recipe
+INNER JOIN recipe_ingredients ON recipe.id_recipe = recipe_ingredients.id_recipe 
+JOIN ingredient ON recipe_ingredients.id_ingredient = ingredient.id_ingredient
+WHERE ingredient.ingredient_name LIKE '%Poulet%'
+
 14- Mettez à jour toutes les recettes en diminuant leur temps de préparation de 5 minutes 
+
+UPDATE recipe
+SET preparation_time = preparation_time - 5
+
 15- Afficher les recettes qui ne nécessitent pas d’ingrédients coûtant plus de 2€ par unité de mesure
+
+SELECT recipe_name
+FROM recipe
+INNER JOIN recipe_ingredients ON recipe.id_recipe = recipe_ingredients.id_recipe 
+JOIN ingredient ON recipe_ingredients.id_ingredient = ingredient.id_ingredient
+WHERE recipe.id_recipe NOT IN (SELECT recipe.id_recipe
+							FROM recipe 
+							INNER JOIN recipe_ingredients ON recipe.id_recipe = recipe_ingredients.id_recipe 
+							JOIN ingredient ON recipe_ingredients.id_ingredient = ingredient.id_ingredient
+							WHERE price > 2)
+GROUP BY recipe_name
+
 16- Afficher la / les recette(s) les plus rapides à préparer
 17- Trouver les recettes qui ne nécessitent aucun ingrédient (par exemple la recette de la tasse d’eau 
 chaude qui consiste à verser de l’eau chaude dans une tasse)
