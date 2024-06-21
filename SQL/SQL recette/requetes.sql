@@ -77,6 +77,10 @@ JOIN ingredient ON recipe_ingredients.id_ingredient = ingredient.id_ingredient
 WHERE recipe.id_recipe = 5
 
 10- Ajouter un ingrédient en base de données : Poivre, unité : cuillère à café, prix : 2.5 €
+
+INSERT INTO ingredient (ingredient_name,unity,price)
+VALUE ('poivre','cuillère à café',2.5)
+
 11- Modifier le prix de l’ingrédient n°12 (prix à votre convenance)
 12- Afficher le nombre de recettes par catégories : X entrées, Y plats, Z desserts
 13- Afficher les recettes qui contiennent l’ingrédient « Poulet »
