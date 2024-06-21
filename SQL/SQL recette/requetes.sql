@@ -89,7 +89,7 @@ WHERE id_ingredient = 12;
 
 12- Afficher le nombre de recettes par catégories : X entrées, Y plats, Z desserts
 
-SELECT category_name, SUM() AS nbCategorie
+SELECT category_name, COUNT(recipe.id_category) AS nbCategorie
 FROM recipe
 INNER JOIN category ON recipe.id_category = category.id_category
 GROUP BY recipe.id_category
@@ -143,6 +143,13 @@ WHERE id_recipe NOT IN (SELECT recipe_ingredients.id_recipe
 
 18- Trouver les ingrédients qui sont utilisés dans au moins 3 recettes
 
+SELECT ingredient_name
+FROM ingredient
+INNER JOIN recipe_ingredients ON ingredient.id_ingredient = recipe_ingredients.id_ingredient
+GROUP BY ingredient.id_ingredient
+HAVING COUNT(ingredient.id_ingredient) >= 3;
+
 19- Ajouter un nouvel ingrédient à une recette spécifique
+
 20- Bonus : Trouver la recette la plus coûteuse de la base de données (il peut y avoir des ex aequo, il est 
 donc exclu d’utiliser la clause LIMIT
