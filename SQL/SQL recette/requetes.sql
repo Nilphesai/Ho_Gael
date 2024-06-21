@@ -82,6 +82,11 @@ INSERT INTO ingredient (ingredient_name,unity,price)
 VALUE ('poivre','cuillère à café',2.5)
 
 11- Modifier le prix de l’ingrédient n°12 (prix à votre convenance)
+
+UPDATE ingredient
+SET price = 1.05
+WHERE id_ingredient = 12;
+
 12- Afficher le nombre de recettes par catégories : X entrées, Y plats, Z desserts
 13- Afficher les recettes qui contiennent l’ingrédient « Poulet »
 14- Mettez à jour toutes les recettes en diminuant leur temps de préparation de 5 minutes 
