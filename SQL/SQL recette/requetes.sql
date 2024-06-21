@@ -15,6 +15,12 @@ GROUP BY recipe.id_recipe
 ORDER BY preparation_time DESC
 
 3- Afficher les recettes qui nécessitent au moins 30 min de préparation
+
+SELECT recipe_name, preparation_time
+FROM recipe
+WHERE preparation_time >= 30
+ORDER BY preparation_time DESC
+
 4- Afficher les recettes dont le nom contient le mot « Salade » (peu importe où est situé le mot en 
 question)
 5- Insérer une nouvelle recette : « Pâtes à la carbonara » dont la durée de réalisation est de 20 min avec 
