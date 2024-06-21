@@ -69,6 +69,13 @@ WHERE recipe.id_recipe = 5
 GROUP BY recipe.id_recipe
 
 9- Afficher le détail de la recette n°5 (liste des ingrédients, quantités et prix)
+
+SELECT recipe_name,ingredient_name,quantity,price
+FROM recipe
+INNER JOIN recipe_ingredients ON recipe.id_recipe = recipe_ingredients.id_recipe 
+JOIN ingredient ON recipe_ingredients.id_ingredient = ingredient.id_ingredient
+WHERE recipe.id_recipe = 5
+
 10- Ajouter un ingrédient en base de données : Poivre, unité : cuillère à café, prix : 2.5 €
 11- Modifier le prix de l’ingrédient n°12 (prix à votre convenance)
 12- Afficher le nombre de recettes par catégories : X entrées, Y plats, Z desserts
