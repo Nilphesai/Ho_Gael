@@ -130,7 +130,19 @@ WHERE preparation_time = (SELECT MIN(preparation_time)
 
 17- Trouver les recettes qui ne nécessitent aucun ingrédient (par exemple la recette de la tasse d’eau 
 chaude qui consiste à verser de l’eau chaude dans une tasse)
+
+INSERT INTO recipe (recipe_name,preparation_time,instructions, id_category)
+VALUE ('Eau chaude',1,'La recette de la tasse d’eau 
+chaude qui consiste à verser de l’eau chaude dans une tasse',1);
+
+SELECT recipe_name
+FROM recipe
+WHERE id_recipe NOT IN (SELECT recipe_ingredients.id_recipe
+								FROM recipe_ingredients
+								INNER JOIN recipe ON recipe.id_recipe = recipe_ingredients.id_recipe)
+
 18- Trouver les ingrédients qui sont utilisés dans au moins 3 recettes
+
 19- Ajouter un nouvel ingrédient à une recette spécifique
 20- Bonus : Trouver la recette la plus coûteuse de la base de données (il peut y avoir des ex aequo, il est 
 donc exclu d’utiliser la clause LIMIT
