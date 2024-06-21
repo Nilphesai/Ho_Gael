@@ -46,6 +46,11 @@ VALUE (100,24,11),
 
 6- Modifier le nom de la recette ayant comme identifiant id_recette = 3 (nom de la recette à votre 
 convenance)
+
+UPDATE recipe
+SET recipe_name = 'salade de fruit automne'
+WHERE id_recipe = 3;
+
 7- Supprimer la recette n°2 de la base de données
 8- Afficher le prix total de la recette n°5
 9- Afficher le détail de la recette n°5 (liste des ingrédients, quantités et prix)
