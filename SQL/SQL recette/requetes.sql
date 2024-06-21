@@ -60,6 +60,14 @@ DELETE FROM recipe
 WHERE id_recipe = 2;
 
 8- Afficher le prix total de la recette n°5
+
+SELECT recipe_name, preparation_time, SUM(ingredient.price*quantity) AS prix
+FROM recipe
+INNER JOIN recipe_ingredients ON recipe.id_recipe = recipe_ingredients.id_recipe 
+JOIN ingredient ON recipe_ingredients.id_ingredient = ingredient.id_ingredient
+WHERE recipe.id_recipe = 5
+GROUP BY recipe.id_recipe
+
 9- Afficher le détail de la recette n°5 (liste des ingrédients, quantités et prix)
 10- Ajouter un ingrédient en base de données : Poivre, unité : cuillère à café, prix : 2.5 €
 11- Modifier le prix de l’ingrédient n°12 (prix à votre convenance)
