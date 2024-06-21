@@ -23,6 +23,11 @@ ORDER BY preparation_time DESC
 
 4- Afficher les recettes dont le nom contient le mot « Salade » (peu importe où est situé le mot en 
 question)
+
+SELECT recipe_name
+FROM recipe
+WHERE recipe_name LIKE '%salade%' OR instructions LIKE '%salad%'
+
 5- Insérer une nouvelle recette : « Pâtes à la carbonara » dont la durée de réalisation est de 20 min avec 
 les instructions de votre choix. Pensez à alimenter votre base de données en conséquence afin de 
 pouvoir lister les détails de cette recettes (ingrédients)
