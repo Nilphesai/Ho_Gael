@@ -9,15 +9,15 @@
         die('Erreur : ' . $e->getMessage());
     }
 
-$sqlQuery = 'SELECT recipe_name, ingredient_name, preparation_time, category_name
+$sqlQuery = 'SELECT recipe_name, ingredient_name, preparation_time, category_name, quantity, unity, instructions
 FROM ingredient
 INNER JOIN recipe_ingredients ON ingredient.id_ingredient = recipe_ingredients.id_ingredient
 JOIN recipe ON recipe_ingredients.id_recipe = recipe.id_recipe
 JOIN category ON recipe.id_category = category.id_category
 WHERE recipe.id_recipe ='.$_GET['id'];
-$recipesStatement = $mysqlClient->prepare($sqlQuery);
-$recipesStatement->execute();
-$ingredients = $recipesStatement->fetchAll();
+$ingredientsStatement = $mysqlClient->prepare($sqlQuery);
+$ingredientsStatement->execute();
+$ingredients = $ingredientsStatement->fetchAll();
 
 echo "<table class='table'>",
         "<Thead>",
@@ -32,8 +32,16 @@ echo "<table class='table'>",
 foreach ($ingredients as $ingredient) {    
  echo "<tr>",
     "<td>".$ingredient['ingredient_name']."</td>",
+    "<td>".$ingredient['quantity']."</td>",
+    "<td>".$ingredient['unity']."</td>",
     "</tr>";
 }
 
+echo 
+    "</tbody>",
+        "</table>",
+
+    "<p><img src=./upload/pomme.png width=10% height=10%></p></br>
+    <p>".$ingredient['instructions']."</p>";
 
 ?>
