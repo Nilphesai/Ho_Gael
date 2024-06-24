@@ -9,33 +9,31 @@
         die('Erreur : ' . $e->getMessage());
     }
 
-$sqlQuery = 'SELECT id_recipe, ingredient_name, quantity 
+$sqlQuery = 'SELECT recipe_name, ingredient_name, preparation_time, category_name
 FROM ingredient
 INNER JOIN recipe_ingredients ON ingredient.id_ingredient = recipe_ingredients.id_ingredient
-WHERE id_recipe ='.$_GET['id'];
+JOIN recipe ON recipe_ingredients.id_recipe = recipe.id_recipe
+JOIN category ON recipe.id_category = category.id_category
+WHERE recipe.id_recipe ='.$_GET['id'];
 $recipesStatement = $mysqlClient->prepare($sqlQuery);
 $recipesStatement->execute();
 $ingredients = $recipesStatement->fetchAll();
 
-
-
-if(isset($_GET['action'])){
-    echo "<table class='table'>",
-                    "<Thead>",
-                        "<tr>",
-                            "<th>ingrédient</th>",
-                            "<th>id_recette</th>",
-                            "<th>quantité</th>",
-                        "</tr>",
-                    "</tread>",
-                    "<tbody>";
-    foreach ($ingredients as $ingredient) {       
-     echo "<tr>",
-        "<td>".$ingredient['ingredient_name']."</td>",
-        "<td>".$ingredient['id_recipe']."</td>",
-        "<td>".$ingredient['quantity']."</td>",
-        "</tr>";
+echo "<table class='table'>",
+        "<Thead>",
+            "<tr>",
+               "<th>".$ingredients[0][0]."</th>",
+               "<th>".$ingredients[0][3]."</th>",
+               "<th> de ".$ingredients[0][2]." min de préparation</th>",
+               
+            "</tr>",
+        "</tread>",
+"<tbody>";
+foreach ($ingredients as $ingredient) {    
+ echo "<tr>",
+    "<td>".$ingredient['ingredient_name']."</td>",
+    "</tr>";
 }
-}
+
 
 ?>

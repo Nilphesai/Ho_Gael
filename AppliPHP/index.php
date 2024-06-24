@@ -34,6 +34,5 @@ foreach ($recipes as $recipe) {
         "<td><a href='detail.php?action=detail&id=$recipe[id_recipe]'>".$recipe['preparation_time']."</a></td>",
         "<td><a href='detail.php?action=detail&id=$recipe[id_recipe]'>".$recipe['category_name']."</td></a>",
         "</tr>";
-
 }
 ?>
