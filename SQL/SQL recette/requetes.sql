@@ -158,4 +158,31 @@ INSERT INTO recipe_ingredients (quantity,id_ingredient,id_recipe)
 VALUE (0.2,27,3);
 
 20- Bonus : Trouver la recette la plus coûteuse de la base de données (il peut y avoir des ex aequo, il est 
-donc exclu d’utiliser la clause LIMIT
+donc exclu d’utiliser la clause LIMIT)
+
+SELECT recipe_name, ROUND(SUM(ingredient.price*quantity),2) AS prix
+FROM recipe
+INNER JOIN recipe_ingredients ON recipe.id_recipe = recipe_ingredients.id_recipe 
+JOIN ingredient ON recipe_ingredients.id_ingredient = ingredient.id_ingredient
+GROUP BY recipe.id_recipe
+HAVING prix >= ALL (
+	SELECT ROUND(SUM(ingredient.price*quantity),2) AS prix
+	FROM recipe
+	INNER JOIN recipe_ingredients ON recipe.id_recipe = recipe_ingredients.id_recipe 
+	JOIN ingredient ON recipe_ingredients.id_ingredient = ingredient.id_ingredient
+	GROUP BY recipe.id_recipe
+)
+
+SELECT recipe_name, ROUND(SUM(ingredient.price*quantity),2) AS prix
+FROM recipe
+INNER JOIN recipe_ingredients ON recipe.id_recipe = recipe_ingredients.id_recipe 
+JOIN ingredient ON recipe_ingredients.id_ingredient = ingredient.id_ingredient
+GROUP BY recipe.id_recipe
+HAVING prix = (
+	SELECT ROUND(SUM(ingredient.price*quantity),2) AS prix
+	FROM recipe
+	INNER JOIN recipe_ingredients ON recipe.id_recipe = recipe_ingredients.id_recipe 
+	JOIN ingredient ON recipe_ingredients.id_ingredient = ingredient.id_ingredient
+	GROUP BY recipe.id_recipe
+	LIMIT 1
+)
