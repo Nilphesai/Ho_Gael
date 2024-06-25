@@ -9,7 +9,7 @@
         die('Erreur : ' . $e->getMessage());
     }
 
-$sqlQuery = 'SELECT recipe_name, ingredient_name, preparation_time, category_name, quantity, unity, instructions
+$sqlQuery = 'SELECT recipe_name, ingredient_name, preparation_time, category_name, quantity, unity, instructions, image
 FROM ingredient
 INNER JOIN recipe_ingredients ON ingredient.id_ingredient = recipe_ingredients.id_ingredient
 JOIN recipe ON recipe_ingredients.id_recipe = recipe.id_recipe
@@ -41,7 +41,7 @@ echo
     "</tbody>",
         "</table>",
 
-    "<p><img src=./upload/pomme.png width=10% height=10%></p></br>
+    "<p><img src= ./upload/".$ingredient['image']." width=10% height=10%></p></br>
     <p>".$ingredient['instructions']."</p>";
 
 ?>

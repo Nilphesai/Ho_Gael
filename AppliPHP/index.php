@@ -11,7 +11,7 @@ try {
 // Si tout va bien, on peut continuer
 
 // On récupère tout le contenu de la table recipes
-$sqlQuery = 'SELECT id_recipe, recipe_name, preparation_time, category_name 
+$sqlQuery = 'SELECT id_recipe, recipe_name, preparation_time, category_name, image
                 FROM recipe
                 INNER JOIN category ON recipe.id_category = category.id_category';
 $recipesStatement = $mysqlClient->prepare($sqlQuery);
@@ -30,8 +30,8 @@ echo "<table class='table'>",
                     "</tread>",
                     "<tbody>";
 foreach ($recipes as $recipe) {            
-     echo "<tr>",//$recipe['image'] à la place de pomme.png (si la table à une colonne image)
-        "<td><img src=./upload/pomme.png width=10% height=10%></td>",
+     echo "<tr>",
+        "<td><img src=./upload/".$recipe['image']." width=10% height=10%></td>",
         "<td><a href='detail.php?action=detail&id=$recipe[id_recipe]'>".$recipe['recipe_name']."</a></td>",
         "<td>".$recipe['preparation_time']."</td>",
         "<td>".$recipe['category_name']."</td>",
