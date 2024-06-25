@@ -8,16 +8,16 @@
         // En cas d'erreur, on affiche un message et on arrête tout
         die('Erreur : ' . $e->getMessage());
     }
-
-$sqlQuery = 'SELECT recipe_name, ingredient_name, preparation_time, category_name, quantity, unity, instructions, image
-FROM ingredient
-INNER JOIN recipe_ingredients ON ingredient.id_ingredient = recipe_ingredients.id_ingredient
-JOIN recipe ON recipe_ingredients.id_recipe = recipe.id_recipe
-JOIN category ON recipe.id_category = category.id_category
-WHERE recipe.id_recipe ='.$_GET['id'];
-$ingredientsStatement = $mysqlClient->prepare($sqlQuery);
-$ingredientsStatement->execute();
-$ingredients = $ingredientsStatement->fetchAll();
+    
+        $sqlQuery = 'SELECT recipe_name, ingredient_name, preparation_time, category_name, quantity, unity, instructions, image
+        FROM ingredient
+        INNER JOIN recipe_ingredients ON ingredient.id_ingredient = recipe_ingredients.id_ingredient
+        JOIN recipe ON recipe_ingredients.id_recipe = recipe.id_recipe
+        JOIN category ON recipe.id_category = category.id_category
+        WHERE recipe.id_recipe ='.$_GET['id'];
+        $ingredientsStatement = $mysqlClient->prepare($sqlQuery);
+        $ingredientsStatement->execute();
+        $ingredients = $ingredientsStatement->fetchAll();
 
 echo "<table class='table'>",
         "<Thead>",
@@ -44,4 +44,41 @@ echo
     "<p><img src= ./upload/".$ingredient['image']." width=10% height=10%></p></br>
     <p>".$ingredient['instructions']."</p>";
 
-?>
+
+        echo "<form action='traitement.php?action=add_ingredient&amp;ing=".$ingredients[0][0]."' method='post'>";
+?>           
+            <p>
+            <label>
+                Nom de l'ingredient :
+                <input type="text" name="nameIngredient">
+            </label>
+            </p>
+            <p>
+            <label>
+                unité de mesure:
+                <input type="text" name="unity">
+            </label>
+            </p>
+
+            <p>
+            <label>
+                prix :
+                <input type="number" name="price">
+            </label>
+            </p>
+
+            <p>
+            <label>
+                quantité :
+                <input type="number" name="quantity">
+            </label>
+            </p>
+            <p>
+            <input type="submit" name="submit" value="Ajouter un ingredient">
+            </p>
+        
+        </form>
+        <?php 
+    if(isset($_SESSION['messages'])){
+        echo $_SESSION["messages"];
+        } ?>
