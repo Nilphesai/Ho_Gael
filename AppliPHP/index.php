@@ -53,7 +53,7 @@ echo           "</tbody>",
     </header>
 
     <h1>Ajouter un plat</h1>
-    <form action="traitement.php?action=add" method="post" enctype="multipart/form-data">
+    <form id="formPrincipal" action="traitement.php?action=add" method="post" enctype="multipart/form-data">
         <p>
             <label>
                 Nom du plat :
@@ -69,7 +69,7 @@ echo           "</tbody>",
         <p>
             <label>
                 instruction :
-                <input type="text" name="instruct">
+                <input type="textarea" name="instruct">
             </label>
         </p>
         <p>
@@ -85,7 +85,11 @@ echo           "</tbody>",
         </p>
 
    <!--     //liée avec x ingredient    -->
-            <p>
+        
+        <div id="originalForm">
+        <fieldset>
+            <legend>ingrédient liée au plat</legend>
+        <p>
             <label>
                 Nom de l'ingredient :
                 <input type="text" name="nameIngredient">
@@ -111,14 +115,48 @@ echo           "</tbody>",
                 <input type="number" name="quantity">
             </label>
             </p>
+</fieldset>
+        </div>
+    </form>
+    <button onclick="duplicateForm()">ajouter un ingrédient supplémentaire</button>
 
-        <label for="file">Fichier</label>
+</br><label for="file">Fichier</label>
         <input type="file" name="file">
+        
         <p>
-            <input type="submit" name="submit" value="Ajouter le plat">
+            <input type="submit" name="submit" value="Ajouter la recette">
         </p>
         
-    </form>
+    
+
+    
+    <script>
+        var i=1;
+        function duplicateForm() {
+            
+            const originalForm = document.getElementById("originalForm");
+            const clonedForm = originalForm.cloneNode(true);
+            // Modifiez les attributs "name" des champs clonés si nécessaire
+            // Parcourez tous les champs de saisie clonés
+            clonedForm.id = "originalForm"+i;
+            clonedForm.getElementsByTagName("input")[0].name = "nameIngredient"+i;
+            clonedForm.getElementsByTagName("input")[1].name = "unity"+i;
+            clonedForm.getElementsByTagName("input")[2].name = "price"+i;
+            clonedForm.getElementsByTagName("input")[3].name = "quantity"+i;
+            /*clonedForm.querySelectorAll("input").forEach((input, index) => {
+                input.name = `quantity${index + $i}`;
+                $i++
+            });*/
+            i=i+1;
+            const principalForm = document.getElementById("formPrincipal")
+            principalForm.appendChild(clonedForm);
+            
+        }
+    </script>
+
+
+    
+
     <?php 
     if(isset($_SESSION['messages'])){
         echo $_SESSION["messages"];
