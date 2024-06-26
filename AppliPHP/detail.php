@@ -45,7 +45,7 @@ echo
     <p>".$ingredient['instructions']."</p>";
 
 
-        echo "<form action='traitement.php?action=add_ingredient&amp;ing=".$ingredients[0][0]."' method='post'>";
+        echo "<form action='traitement.php?action=plus_ingredient&amp;ing=".$ingredients[0][0]."' method='post'>";
 ?>           
             <p>
             <label>

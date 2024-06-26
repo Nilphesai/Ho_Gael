@@ -85,47 +85,48 @@ echo           "</tbody>",
         </p>
 
    <!--     //liée avec x ingredient    -->
+   <fieldset id="formIngredients">
+   <legend>ingrédient liée au plat</legend>
+        <div id="originalForm0">
         
-        <div id="originalForm">
-        <fieldset>
-            <legend>ingrédient liée au plat</legend>
         <p>
             <label>
                 Nom de l'ingredient :
-                <input type="text" name="nameIngredient">
+                <input type="text" name="nameIngredient0">
             </label>
             </p>
             <p>
             <label>
                 unité de mesure:
-                <input type="text" name="unity">
+                <input type="text" name="unity0">
             </label>
             </p>
 
             <p>
             <label>
                 prix :
-                <input type="number" name="price">
+                <input type="number" name="price0">
             </label>
             </p>
 
             <p>
             <label>
                 quantité :
-                <input type="number" name="quantity">
+                <input type="number" name="quantity0">
             </label>
             </p>
 </fieldset>
         </div>
-    </form>
-    <button onclick="duplicateForm()">ajouter un ingrédient supplémentaire</button>
-
-</br><label for="file">Fichier</label>
+    
+<label for="file" id="namefile">Fichier</label>
         <input type="file" name="file">
-        
         <p>
             <input type="submit" name="submit" value="Ajouter la recette">
         </p>
+    </form>
+    <button onclick="duplicateForm()">ajouter un ingrédient supplémentaire</button>
+    
+        
         
     
 
@@ -134,7 +135,7 @@ echo           "</tbody>",
         var i=1;
         function duplicateForm() {
             
-            const originalForm = document.getElementById("originalForm");
+            const originalForm = document.getElementById("originalForm0");
             const clonedForm = originalForm.cloneNode(true);
             // Modifiez les attributs "name" des champs clonés si nécessaire
             // Parcourez tous les champs de saisie clonés
@@ -148,7 +149,7 @@ echo           "</tbody>",
                 $i++
             });*/
             i=i+1;
-            const principalForm = document.getElementById("formPrincipal")
+            const principalForm = document.getElementById("formIngredients")
             principalForm.appendChild(clonedForm);
             
         }
