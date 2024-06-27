@@ -87,6 +87,16 @@ GROUP BY sexe
 
 k. Liste des acteurs ayant plus de 50 ans (âge révolu et non révolu)
 
-
+SELECT personne.nom,personne.prenom
+FROM personne
+INNER JOIN acteur ON acteur.id_personne = personne.id_personne
+WHERE DATEDIFF(CURDATE(),date_naissance) > 50*365;
 
 l. Acteurs ayant joué dans 3 films ou plus
+
+SELECT personne.nom, personne.prenom
+FROM personne
+INNER JOIN acteur ON acteur.id_personne = personne.id_personne
+JOIN jouer ON acteur.id_acteur = jouer.id_acteur
+GROUP BY jouer.id_acteur
+HAVING COUNT(jouer.id_film) >=3;
