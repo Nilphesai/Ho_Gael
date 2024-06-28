@@ -122,7 +122,7 @@ class CinemaController {
         $requeteRealisateur->execute(["id" => $id]);
 
         $requeteFilmographie = $pdo->prepare("
-        SELECT titre
+        SELECT id_film, titre
         FROM Realisateur
         INNER JOIN film ON film.id_realisateur = realisateur.id_realisateur
         WHERE realisateur.id_realisateur = :id

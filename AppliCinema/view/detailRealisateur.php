@@ -22,7 +22,7 @@
             $Filmographies = $requeteFilmographie->fetchAll();
             foreach($Filmographies as $film) { ?>
                 <tr>
-                    <td><?= $film[0] ?></td>
+                    <td><a href='index.php?action=detailFilm&id=<?=$film["id_film"] ?>' ><?= $film[1] ?></td>
                 </tr>
         <?php } ?>
     </tbody>
