@@ -6,16 +6,27 @@
     <thread>
         <?php
         $film = $requeteFilm->fetch();
-        echo $film["titre"];
-        echo $film["duree"];
-        echo $film["synopsis"];
-        echo $film["note"];
-        echo $film["affiche"];
-        echo $film["annee_sortie"];
+        echo "<img src=./public/img/".$film["affiche"]." width=30% height=30%></br>";
+        echo $film["titre"]."</br>";
+        echo $film["duree"]." min</br>";
+        echo $film["synopsis"]."</br>";
+        echo $film["note"]."</br>";
+        echo $film["annee_sortie"]."</br>";
         
         $realisateur = $requeteRealisateur->fetch();
-        echo $realisateur[0];
+        echo $realisateur[0]." ";
         echo $realisateur[1];?>
+        <tr>
+            <th>genre</th>
+        </tr>
+        <?php
+            
+            $genres = $requeteGenre->fetchAll();
+            foreach($genres as $genre) { ?>
+                <tr>
+                    <td><?= $genre[0] ?></td>
+                </tr>
+        <?php } ?>
         <tr>
             <th>Nom</th>
             <th>Prenom</th>
