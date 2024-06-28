@@ -24,7 +24,7 @@
             $casting = $requeteCasting->fetchAll();
             foreach($casting as $cast) { ?>
                 <tr>
-                    <td><?= $cast[0] ?></td>
+                    <td><a href='index.php?action=detailFilm&id=<?=$cast[2] ?>' ><?= $cast[0] ?></td>
                     <td><?= $cast[1] ?></td>
                 </tr>
         <?php } ?>
