@@ -10,6 +10,7 @@
         <nav>
             <ul>
                 <li><a href="index.php?action=listFilms">Films</a></li>
+                <li><a href="index.php?action=listGenres">Genres</a></li>
                 <li><a href="index.php?action=listActeurs">Acteurs</a></li>
                 <li><a href="index.php?action=listRealisateurs">Realisateurs</a></li>
             </ul>
