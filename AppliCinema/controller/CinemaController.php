@@ -17,6 +17,15 @@ class CinemaController {
             ORDER BY annee_sortie DESC
         ");
 
+        $requeteRealisateur = $pdo->prepare("
+            SELECT personne.nom, personne.prenom, realisateur.id_realisateur
+            FROM realisateur
+            INNER JOIN personne ON personne.id_personne = realisateur.id_personne
+            JOIN film ON film.id_realisateur = realisateur.id_realisateur
+            GROUP BY realisateur.id_realisateur
+        ");
+        $requeteRealisateur->execute();
+
         require "view/listFilms.php";
     }
 
