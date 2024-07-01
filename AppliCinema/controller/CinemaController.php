@@ -166,5 +166,35 @@ class CinemaController {
         require "view/listGenres.php";
     }
 
-    
+    public function addGenre() {
+        
+        $libelle = filter_input(INPUT_POST, "libelle", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        
+        if($libelle){
+            $pdo = Connect::seConnecter();  
+            $sqlQuery2 = $pdo->prepare("
+                    SELECT libelle
+                    FROM genre
+                    WHERE libelle = :libelle");
+                    $sqlQuery2->execute(["libelle" => $libelle]);
+                    $id_genre = $sqlQuery2->fetchAll();
+            
+                if (!$id_genre){
+                    $sqlQuery = $pdo->prepare("
+                    INSERT INTO genre (libelle)
+                    VALUES (:libelleGenre)");
+                    $sqlQuery->execute(["libelleGenre" => $libelle]);
+                }
+                else{
+                    $erreur = "ce genre existe déjà";
+                    $_SESSION['messages'] = $erreur;
+                }
+                header("Location: ind.ex.php?action=listGenres");
+        }
+        
+    }
+
 }
+              
+   
+
