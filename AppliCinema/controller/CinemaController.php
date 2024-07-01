@@ -14,6 +14,7 @@ class CinemaController {
         $requete = $pdo->query("
             SELECT id_film, titre, annee_sortie
             FROM film
+            ORDER BY annee_sortie DESC
         ");
 
         require "view/listFilms.php";
@@ -53,6 +54,7 @@ class CinemaController {
         JOIN role ON role.id_role = jouer.id_role
         JOIN personne ON personne.id_personne = acteur.id_personne
         WHERE jouer.id_film = :id
+        ORDER BY personne.nom
         ");
         $requeteCasting->execute( ["id" => $id]);
 
@@ -63,11 +65,12 @@ class CinemaController {
 
         $pdo = Connect::seConnecter();
         $requeteFilms = $pdo->prepare("
-            SELECT film.titre, film.id_film
+            SELECT film.titre, film.annee_sortie, film.id_film
             FROM film
             INNER JOIN categoriser ON film.id_film = categoriser.id_film
             JOIN genre ON categoriser.id_genre = genre.id_genre
             WHERE genre.id_genre = :id
+            ORDER BY film.titre
         ");
         $requeteFilms->execute( ["id" => $id]);
 
@@ -81,6 +84,7 @@ class CinemaController {
             SELECT id_acteur, prenom, nom
             FROM personne
             INNER JOIN acteur ON personne.id_personne = acteur.id_personne
+            ORDER BY nom
         ");
 
         require "view/listActeurs.php";
@@ -98,13 +102,14 @@ class CinemaController {
         $requeteActeur->execute(["id" => $id]);
 
         $requeteCasting = $pdo->prepare("
-        SELECT film.titre, role.nom, film.id_film
+        SELECT film.titre, film.annee_sortie, role.nom, film.id_film
         FROM acteur
         INNER JOIN jouer ON jouer.id_acteur = acteur.id_acteur
         JOIN role ON role.id_role = jouer.id_role
         JOIN personne ON personne.id_personne = acteur.id_personne
         JOIN film ON film.id_film = jouer.id_film
         WHERE jouer.id_acteur = :id
+        ORDER BY film.annee_sortie
         ");
         $requeteCasting->execute( ["id" => $id]);
 
@@ -119,6 +124,7 @@ class CinemaController {
             SELECT id_realisateur, prenom, nom
             FROM personne
             INNER JOIN realisateur ON personne.id_personne = realisateur.id_personne
+            ORDER BY nom
         ");
 
         require "view/listRealisateurs.php";
@@ -136,10 +142,11 @@ class CinemaController {
         $requeteRealisateur->execute(["id" => $id]);
 
         $requeteFilmographie = $pdo->prepare("
-        SELECT id_film, titre
+        SELECT id_film, titre, annee_sortie
         FROM Realisateur
         INNER JOIN film ON film.id_realisateur = realisateur.id_realisateur
         WHERE realisateur.id_realisateur = :id
+        ORDER BY annee_sortie
         ");
         $requeteFilmographie->execute( ["id" => $id]);
 

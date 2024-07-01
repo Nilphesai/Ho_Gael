@@ -15,6 +15,7 @@
        ?>
         <tr>
             <th>Film</th>
+            <th>année sortie</th>
             <th>Role</th>
         </tr>
     </thead>
@@ -24,8 +25,9 @@
             $casting = $requeteCasting->fetchAll();
             foreach($casting as $cast) { ?>
                 <tr>
-                    <td><a href='index.php?action=detailFilm&id=<?=$cast[2] ?>' ><?= $cast[0] ?></td>
+                    <td><a href='index.php?action=detailFilm&id=<?=$cast[3] ?>' ><?= $cast[0] ?></td>
                     <td><?= $cast[1] ?></td>
+                    <td><?= $cast[2] ?></td>
                 </tr>
         <?php } ?>
     </tbody>

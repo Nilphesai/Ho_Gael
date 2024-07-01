@@ -14,6 +14,7 @@
        ?>
         <tr>
             <th>Film</th>
+            <th>Année de sortie</th>
         </tr>
     </thead>
     <tbody>
@@ -23,6 +24,7 @@
             foreach($Filmographies as $film) { ?>
                 <tr>
                     <td><a href='index.php?action=detailFilm&id=<?=$film["id_film"] ?>' ><?= $film[1] ?></td>
+                    <td><?= $film[2] ?></td>
                 </tr>
         <?php } ?>
     </tbody>

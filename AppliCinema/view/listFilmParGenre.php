@@ -8,13 +8,15 @@
         
         <tr>
             <th>Films</th>
+            <th>Année de sortie</th>
         </tr>
         
         <?php    
             $Films = $requeteFilms->fetchAll();
             foreach($Films as $film) { ?>
                 <tr>
-                    <td><a href='index.php?action=detailFilm&id=<?=$film[1] ?>' ><?= $film[0] ?></td>
+                    <td><a href='index.php?action=detailFilm&id=<?=$film[2] ?>' ><?= $film[0] ?></td>
+                    <td><?= $film[1] ?></td>
                 </tr>
         <?php } ?>
     </thead>
