@@ -117,6 +117,51 @@ class CinemaController {
 
     }
 
+    public Function addActeur(){
+        $nom = filter_input(INPUT_POST, "nom", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $prenom = filter_input(INPUT_POST, "prenom", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $sexe = filter_input(INPUT_POST, "sexe", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $date_naissance = "date_naissance";
+        if($nom && $prenom && $sexe && $date_naissance){
+            $pdo = Connect::seConnecter();  
+            $sqlQuery2 = $pdo->prepare("
+                SELECT id_personne
+                FROM personne
+                WHERE nom = :nomAdd AND prenom = :prenomAdd AND date_naissance = :date_naissanceAdd");
+                $sqlQuery2->execute(["nomAdd" => $nom, "prenomAdd" => $prenom,"date_naissanceAdd" => $date_naissance]);
+                $id_personne = $sqlQuery2->fetchAll();
+            
+            if (!$id_personne){
+                $sqlQuery = $pdo->prepare("
+                INSERT INTO personne (nom, prenom, date_naissance)
+                VALUES (:nomAdd, :prenomAdd, :date_naissanceAdd)");
+                $sqlQuery->execute(["nomAdd" => $nom, "prenomAdd" => $prenom,"date_naissanceAdd" => $date_naissance]);
+                $id_personne = $sqlQuery->fetchAll();
+            }
+
+            $sqlQuery3 = $pdo->prepare("
+                SELECT id_acteur
+                FROM acteur
+                INNER JOIN acteur.id_personne = personne.id_personne
+                WHERE acteur.id_personne = :id_personneAdd");
+                $sqlQuery3->execute([":id_personneAdd" => $id_personne]);
+                $id_acteur = $sqlQuery3->fetchAll();
+            
+                if (!$id_acteur){
+                    $sqlQuery4 = $pdo->prepare("
+                    INSERT INTO acteur (id_acteur, id_personne)
+                    VALUES (:id_acteurAdd, :id_personneAdd)");
+                    $sqlQuery4->execute(["id_acteurAdd" => $id_acteur, "id_personneAdd" => $id_personne]);
+                    $id_acteur = $sqlQuery4->fetchAll();
+                }
+                else{
+                    $erreur = "cet acteur existe déjà";
+                    $_SESSION['messages'] = $erreur;
+            }
+            header("Location: index.php?action=listActeurs");
+        }
+    }
+
     public Function listRealisateurs(){
 
         $pdo = Connect::seConnecter();
@@ -182,14 +227,14 @@ class CinemaController {
                 if (!$id_genre){
                     $sqlQuery = $pdo->prepare("
                     INSERT INTO genre (libelle)
-                    VALUES (:libelleGenre)");
-                    $sqlQuery->execute(["libelleGenre" => $libelle]);
+                    VALUES (:libelleAdd)");
+                    $sqlQuery->execute(["libelleAdd" => $libelle]);
                 }
                 else{
                     $erreur = "ce genre existe déjà";
                     $_SESSION['messages'] = $erreur;
                 }
-                header("Location: ind.ex.php?action=listGenres");
+                header("Location: index.php?action=listGenres");
         }
         
     }

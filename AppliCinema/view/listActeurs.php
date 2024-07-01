@@ -19,8 +19,47 @@
         <?php } ?>
     </tbody>
 </table>
+<h1>Ajouter un plat</h1>
+    <form id="formPrincipal" action="index.php?action=addActor" method="post">
+        <p>
+            <label>
+                Nom :
+                <input type="text" name="nom">
+            </label>
+        </p>
+        <p>
+            <label>
+                Prénom :
+                <input type="text" name="prenom">
+            </label>
+        </p>
 
-<?php
+        <p>
+            <label>
+                sexe :</br>
+                <input type="radio" name="sexe" id="Homme" value="1">
+                <label for="typePlat">Homme</label></br>
+                <input type="radio" name="sexe" id="Femme" value="2">
+                <label for="typePlat">Femme</label></br>
+            </label>
+        </p> 
+        <p>
+            <label>
+                date de naissance :
+                <input type="date" name="date_naissance">
+            </label>
+        </p>
+        <p>
+            <input type="submit" name="submit" value="Ajouter acteur">
+        </p>
+    </form>
+    
+<?php 
+    if(isset($_SESSION['messages'])){
+        echo $_SESSION["messages"];
+        } 
+
+
 
 $titre = "Liste des acteurs";
 $titre_secondaire = "Liste des acteurs";
