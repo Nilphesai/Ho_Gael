@@ -70,6 +70,70 @@ class CinemaController {
         require "view/detailFilm.php";
     }
 
+    public Function addFilm(){
+
+        $pdo = Connect::seConnecter();
+
+        if(isset($_FILES['file'])){
+            $tmpName = $_FILES['file']['tmp_name'];
+            $name = $_FILES['file']['name'];
+            $size = $_FILES['file']['size'];
+            $error = $_FILES['file']['error'];
+    
+            $tabExtension = explode('.', $name);
+            $extension = strtolower(end($tabExtension));
+            $extensions = ['jpg', 'png', 'jpeg', 'gif'];
+            $maxSize = '4000000';
+            
+            if(in_array($extension, $extensions) && $size <= $maxSize && $error == 0){
+                $uniqueName = uniqid('', true);
+                $file = $uniqueName.'.'.$extension;
+                move_uploaded_file($tmpName, './public/img/'.$file);
+                $_SESSION['file'] = $file;
+            }
+            else{
+                echo "Une erreur est survenue";
+            } 
+        }
+                            
+        $affiche = htmlspecialchars($file);
+        $titre = htmlspecialchars(filter_input(INPUT_POST, "titre"));
+        $duree = filter_input(INPUT_POST, "duree", FILTER_VALIDATE_FLOAT);
+        $synopsis = htmlspecialchars(filter_input(INPUT_POST, "synopsis"));
+        $note = filter_input(INPUT_POST, "note", FILTER_VALIDATE_FLOAT);
+        $date_sortie = htmlspecialchars(filter_input(INPUT_POST, "date_sortie"));
+        $id_real = htmlspecialchars(filter_input(INPUT_POST, "listRealisateur"));
+        //$genre = filter_input(INPUT_POST, "price".$i, FILTER_VALIDATE_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+            
+        if($affiche && $titre && $duree && $synopsis && $note && $date_sortie && $id_real){//tant que ce n'est pas négatif ou null
+            $pdo = Connect::seConnecter();  
+            $sqlQuery2 = $pdo->prepare("
+                SELECT id_film
+                FROM film
+                WHERE titre = :titreAdd AND duree = :dureeAdd AND synopsis = :synopsisAdd AND note = :noteAdd AND date_sortie = DATE_FORMAT(:date_sortieAdd,'%Y') AND id_realisateur = :id_realisateurAdd");
+                $sqlQuery2->execute(["titreAdd" => $titre, "dureeAdd" => $duree, "synopsisAdd" => $synopsis, "noteAdd" => $note, "date_sortieAdd" => $date_sortie, "id_realisateurAdd" => $id_real]);
+                $id_film = $sqlQuery2->fetch()[0];//c'est un array, je cherche donc là la plemière valeur retourné
+            
+            if (!$id_film){
+                $sqlQuery = $pdo->prepare("
+                INSERT INTO film (titre, duree, synopsis, note, affiche, annee_sortie, id_realisateur)
+                VALUES (:titreAdd, :dureeAdd, :synopsisAdd, :noteAdd, :afficheAdd, DATE_FORMAT(:date_sortieAdd,'%Y'), :id_realisateurAdd)");
+                $sqlQuery->execute(["titreAdd" => $titre, "dureeAdd" => $duree, "synopsisAdd" => $synopsis, "noteAdd" => $note, "afficheAdd" => $affiche, "date_sortieAdd" => $date_sortie, "id_realisateurAdd" => $id_real]);
+                $id_film = $pdo->lastInsertId();//récupère l'id_personne du dernier insert
+            }
+            else{
+                $erreur = "ce film existe déjà";
+                $_SESSION['messages'] = $erreur;
+            }
+            
+        }
+        else{
+            $erreur = "valeur d'entrée incorrecte, veuillé réessayer";
+            $_SESSION['messages'] = $erreur;
+        }
+        header("Location: index.php?action=listFilms");
+    }
+
     public Function listFilmParGenre($id){
 
         $pdo = Connect::seConnecter();
@@ -168,6 +232,10 @@ class CinemaController {
                 $_SESSION['messages'] = $erreur;
             }
             
+        }
+        else{
+            $erreur = "valeur d'entrée incorrecte, veuillé réessayer";
+            $_SESSION['messages'] = $erreur;
         }
         header("Location: index.php?action=listActeurs");
     }

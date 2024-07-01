@@ -20,7 +20,7 @@
     </tbody>
 </table>
 <h1>Ajouter un Film</h1>
-    <form id="formPrincipal" action="index.php?action=addFilm" method="post">
+    <form id="formPrincipal" action="index.php?action=addFilm" method="post" enctype="multipart/form-data">
         <p>
             <label>
                 Titre :
@@ -30,7 +30,7 @@
         <p>
             <label>
                 durée (en min) :
-                <input type="number" name="date_naissance">
+                <input type="number" name="duree">
             </label>
         </p>
         <p>
@@ -70,6 +70,9 @@
         </p>
     </form>
 <?php
+if(isset($_SESSION['messages'])){
+    echo $_SESSION["messages"];
+    } 
 
 $titre = "Liste des films";
 $titre_secondaire = "Liste des films";
