@@ -13,9 +13,9 @@
         echo $film["note"]."</br>";
         echo $film["annee_sortie"]."</br>";
         
-        $realisateur = $requeteRealisateur->fetch();
-        echo $realisateur[0]." ";
-        echo $realisateur[1];?>
+        $realisateur = $requeteRealisateur->fetch();?>
+        <p><a href='index.php?action=detailRealisateur&id=<?=$realisateur[2] ?>' ><?=$realisateur[0]?> <?=$realisateur[1]?></p>
+
         <tr>
             <th>genre</th>
         </tr>
@@ -24,7 +24,7 @@
             $genres = $requeteGenre->fetchAll();
             foreach($genres as $genre) { ?>
                 <tr>
-                    <td><?= $genre[0] ?></td>
+                    <td><a href='index.php?action=listFilmParGenre&id=<?=$genre[1] ?>' ><?= $genre[0] ?></td>
                 </tr>
         <?php } ?>
         <tr>
@@ -39,8 +39,8 @@
             $casting = $requeteCasting->fetchAll();
             foreach($casting as $cast) { ?>
                 <tr>
-                    <td><?= $cast[0] ?></td>
-                    <td><?= $cast[1] ?></td>
+                    <td><a href='index.php?action=detailActeur&id=<?=$cast[3] ?>' ><?= $cast[0] ?></td>
+                    <td><a href='index.php?action=detailActeur&id=<?=$cast[3] ?>' ><?= $cast[1] ?></td>
                     <td><?= $cast[2] ?></td>
                 </tr>
         <?php } ?>

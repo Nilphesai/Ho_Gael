@@ -30,17 +30,16 @@ class CinemaController {
         $requeteFilm->execute(["id" => $id]);
 
         $requeteRealisateur = $pdo->prepare("
-            SELECT personne.nom, personne.prenom, role.nom
-            FROM acteur
-            INNER JOIN jouer ON jouer.id_acteur = acteur.id_acteur
-            JOIN role ON role.id_role = jouer.id_role
-            JOIN personne ON personne.id_personne = acteur.id_personne
-            WHERE jouer.id_film = :id
+            SELECT personne.nom, personne.prenom, realisateur.id_realisateur
+            FROM realisateur
+            INNER JOIN personne ON personne.id_personne = realisateur.id_personne
+            JOIN film ON film.id_realisateur = realisateur.id_realisateur
+            WHERE film.id_film = :id
         ");
         $requeteRealisateur->execute(["id" => $id]);
 
         $requeteGenre = $pdo->prepare("
-            SELECT libelle
+            SELECT libelle, genre.id_genre
             FROM genre
             INNER JOIN categoriser ON categoriser.id_genre = genre.id_genre
             WHERE categoriser.id_film = :id
@@ -48,7 +47,7 @@ class CinemaController {
         $requeteGenre->execute( ["id" => $id]);
 
         $requeteCasting = $pdo->prepare("
-        SELECT personne.nom, personne.prenom, role.nom
+        SELECT personne.nom, personne.prenom, role.nom, acteur.id_acteur
         FROM acteur
         INNER JOIN jouer ON jouer.id_acteur = acteur.id_acteur
         JOIN role ON role.id_role = jouer.id_role
@@ -58,6 +57,21 @@ class CinemaController {
         $requeteCasting->execute( ["id" => $id]);
 
         require "view/detailFilm.php";
+    }
+
+    public Function listFilmParGenre($id){
+
+        $pdo = Connect::seConnecter();
+        $requeteFilms = $pdo->prepare("
+            SELECT film.titre, film.id_film
+            FROM film
+            INNER JOIN categoriser ON film.id_film = categoriser.id_film
+            JOIN genre ON categoriser.id_genre = genre.id_genre
+            WHERE genre.id_genre = :id
+        ");
+        $requeteFilms->execute( ["id" => $id]);
+
+        require "view/listFilmParGenre.php";
     }
 
     public Function listActeurs(){
