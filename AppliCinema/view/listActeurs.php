@@ -19,8 +19,8 @@
         <?php } ?>
     </tbody>
 </table>
-<h1>Ajouter un plat</h1>
-    <form id="formPrincipal" action="index.php?action=addActor" method="post">
+<h1>Ajouter un acteur</h1>
+    <form id="formPrincipal" action="index.php?action=addActeur" method="post">
         <p>
             <label>
                 Nom :
@@ -37,9 +37,9 @@
         <p>
             <label>
                 sexe :</br>
-                <input type="radio" name="sexe" id="Homme" value="1">
+                <input type="radio" name="sexe" id="Homme" value="Homme">
                 <label for="typePlat">Homme</label></br>
-                <input type="radio" name="sexe" id="Femme" value="2">
+                <input type="radio" name="sexe" id="Femme" value="Femme">
                 <label for="typePlat">Femme</label></br>
             </label>
         </p> 

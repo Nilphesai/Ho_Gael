@@ -121,42 +121,44 @@ class CinemaController {
         $nom = filter_input(INPUT_POST, "nom", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $prenom = filter_input(INPUT_POST, "prenom", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $sexe = filter_input(INPUT_POST, "sexe", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $date_naissance = "date_naissance";
+        $date_naissance = filter_input(INPUT_POST, "date_naissance");
         if($nom && $prenom && $sexe && $date_naissance){
             $pdo = Connect::seConnecter();  
             $sqlQuery2 = $pdo->prepare("
                 SELECT id_personne
                 FROM personne
-                WHERE nom = :nomAdd AND prenom = :prenomAdd AND date_naissance = :date_naissanceAdd");
-                $sqlQuery2->execute(["nomAdd" => $nom, "prenomAdd" => $prenom,"date_naissanceAdd" => $date_naissance]);
+                WHERE nom = :nomAdd AND prenom = :prenomAdd AND sexe = :sexeAdd AND date_naissance = :date_naissanceAdd");
+                $sqlQuery2->execute(["nomAdd" => $nom, "prenomAdd" => $prenom, "sexeAdd" => $sexe, "date_naissanceAdd" => $date_naissance]);
                 $id_personne = $sqlQuery2->fetchAll();
             
             if (!$id_personne){
                 $sqlQuery = $pdo->prepare("
-                INSERT INTO personne (nom, prenom, date_naissance)
-                VALUES (:nomAdd, :prenomAdd, :date_naissanceAdd)");
-                $sqlQuery->execute(["nomAdd" => $nom, "prenomAdd" => $prenom,"date_naissanceAdd" => $date_naissance]);
-                $id_personne = $sqlQuery->fetchAll();
+                INSERT INTO personne (nom, prenom, sexe, date_naissance)
+                VALUES (:nomAdd, :prenomAdd, :sexeAdd, :date_naissanceAdd)");
+                $sqlQuery->execute(["nomAdd" => $nom, "prenomAdd" => $prenom, "sexeAdd" => $sexe, "date_naissanceAdd" => $date_naissance]);
+                
             }
+            //récupère l'id_personne
+            $sqlQuery2->execute(["nomAdd" => $nom, "prenomAdd" => $prenom, "sexeAdd" => $sexe, "date_naissanceAdd" => $date_naissance]);
+            $id_personne = $sqlQuery2->fetch();
 
             $sqlQuery3 = $pdo->prepare("
-                SELECT id_acteur
+                SELECT acteur.id_acteur
                 FROM acteur
-                INNER JOIN acteur.id_personne = personne.id_personne
+                INNER JOIN personne ON acteur.id_personne = personne.id_personne
                 WHERE acteur.id_personne = :id_personneAdd");
-                $sqlQuery3->execute([":id_personneAdd" => $id_personne]);
-                $id_acteur = $sqlQuery3->fetchAll();
+                $sqlQuery3->execute(["id_personneAdd" => $id_personne[0]]);
+                $id_acteur = $sqlQuery3->fetch();
             
-                if (!$id_acteur){
-                    $sqlQuery4 = $pdo->prepare("
-                    INSERT INTO acteur (id_acteur, id_personne)
-                    VALUES (:id_acteurAdd, :id_personneAdd)");
-                    $sqlQuery4->execute(["id_acteurAdd" => $id_acteur, "id_personneAdd" => $id_personne]);
-                    $id_acteur = $sqlQuery4->fetchAll();
-                }
-                else{
-                    $erreur = "cet acteur existe déjà";
-                    $_SESSION['messages'] = $erreur;
+            if (!$id_acteur){
+                $sqlQuery4 = $pdo->prepare("
+                INSERT INTO acteur (id_personne)
+                VALUES (:id_personneAdd)");
+                $sqlQuery4->execute(["id_personneAdd" => $id_personne[0]]);
+            }
+            else{
+                $erreur = "cet acteur existe déjà";
+                $_SESSION['messages'] = $erreur;
             }
             header("Location: index.php?action=listActeurs");
         }
