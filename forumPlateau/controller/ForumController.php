@@ -11,6 +11,13 @@ class ForumController extends AbstractController implements ControllerInterface{
 
     public function index() {
         
+        return [
+            "view" => VIEW_DIR."home.php",
+            "meta_description" => "Liste des catégories du forum"
+        ];
+    }
+
+    public function listCategories(){
         // créer une nouvelle instance de CategoryManager
         $categoryManager = new CategoryManager();
         // récupérer la liste de toutes les catégories grâce à la méthode findAll de Manager.php (triés par nom)

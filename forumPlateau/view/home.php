@@ -4,5 +4,6 @@
 
 <p>
     <a href="index.php?ctrl=security&action=login">Se connecter</a>
+    <span>&nbsp;-&nbsp;</span>
     <a href="index.php?ctrl=security&action=register">S'inscrire</a>
 </p>
