@@ -26,6 +26,12 @@ class CinemaController {
         ");
         $requeteRealisateur->execute();
 
+        $requeteGenres = $pdo->query("
+            SELECT id_genre, libelle
+            FROM genre
+            ORDER BY libelle
+        ");
+
         require "view/listFilms.php";
     }
 
@@ -103,27 +109,40 @@ class CinemaController {
         $note = filter_input(INPUT_POST, "note", FILTER_VALIDATE_FLOAT);
         $date_sortie = htmlspecialchars(filter_input(INPUT_POST, "date_sortie"));
         $id_real = htmlspecialchars(filter_input(INPUT_POST, "listRealisateur"));
-        //$genre = filter_input(INPUT_POST, "price".$i, FILTER_VALIDATE_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+        $id_genres = [];
+
+        for($i=0;$i<count($_POST['genres']);$i++)
+        {
+            $id_genres[$i] = $_POST['genres'][$i];
+        }
             
-        if($affiche && $titre && $duree && $synopsis && $note && $date_sortie && $id_real){//tant que ce n'est pas négatif ou null
+        if($affiche && $titre && $duree && $synopsis && $note && $date_sortie && $id_real && $id_genres){//tant que ce n'est pas négatif ou null
             $pdo = Connect::seConnecter();  
             $sqlQuery2 = $pdo->prepare("
                 SELECT id_film
                 FROM film
-                WHERE titre = :titreAdd AND duree = :dureeAdd AND synopsis = :synopsisAdd AND note = :noteAdd AND date_sortie = DATE_FORMAT(:date_sortieAdd,'%Y') AND id_realisateur = :id_realisateurAdd");
-                $sqlQuery2->execute(["titreAdd" => $titre, "dureeAdd" => $duree, "synopsisAdd" => $synopsis, "noteAdd" => $note, "date_sortieAdd" => $date_sortie, "id_realisateurAdd" => $id_real]);
+                WHERE titre = :titreAdd AND duree = :dureeAdd AND synopsis = :synopsisAdd AND note = :noteAdd AND annee_sortie = :date_sortieAdd AND id_realisateur = :id_realisateurAdd");
+                $sqlQuery2->execute(["titreAdd" => $titre, "dureeAdd" => $duree, "synopsisAdd" => $synopsis, "noteAdd" => $note, "date_sortieAdd" => date("Y", $date_sortie), "id_realisateurAdd" => $id_real]);
                 $id_film = $sqlQuery2->fetch()[0];//c'est un array, je cherche donc là la plemière valeur retourné
             
             if (!$id_film){
                 $sqlQuery = $pdo->prepare("
                 INSERT INTO film (titre, duree, synopsis, note, affiche, annee_sortie, id_realisateur)
-                VALUES (:titreAdd, :dureeAdd, :synopsisAdd, :noteAdd, :afficheAdd, DATE_FORMAT(:date_sortieAdd,'%Y'), :id_realisateurAdd)");
+                VALUES (:titreAdd, :dureeAdd, :synopsisAdd, :noteAdd, :afficheAdd, :date_sortieAdd, :id_realisateurAdd)");
                 $sqlQuery->execute(["titreAdd" => $titre, "dureeAdd" => $duree, "synopsisAdd" => $synopsis, "noteAdd" => $note, "afficheAdd" => $affiche, "date_sortieAdd" => $date_sortie, "id_realisateurAdd" => $id_real]);
                 $id_film = $pdo->lastInsertId();//récupère l'id_personne du dernier insert
             }
             else{
                 $erreur = "ce film existe déjà";
                 $_SESSION['messages'] = $erreur;
+            }
+            foreach($id_genres as $id_genre)
+            {
+                $sqlQuery3 = $pdo->prepare("
+                INSERT INTO categoriser (id_film, id_genre)
+                VALUES (:id_filmAdd, :id_genreAdd)");
+                $sqlQuery3->execute(["id_filmAdd" => $id_film,"id_genreAdd" => $id_genre]);
+                
             }
             
         }

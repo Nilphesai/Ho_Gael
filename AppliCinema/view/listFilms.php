@@ -27,6 +27,16 @@
                 <input type="text" name="titre">
             </label>
         </p>
+
+        <fieldset>
+  <legend>Genres:</legend>
+        <?php
+            foreach($requeteGenres->fetchAll() as $genre) { ?>                     
+    <input type="checkbox" value=<?=$genre["id_genre"]?> name=genres[]>
+    <label for=<?=$genre["libelle"]?>><?=$genre["libelle"]?></label>
+  <?php } ?>
+</fieldset>
+
         <p>
             <label>
                 durée (en min) :
@@ -36,7 +46,8 @@
         <p>
             <label>
                 Synopsis :
-                <input type="text" name="synopsis">
+                <textarea name="synopsis">Synopsis du film
+                </textarea>
             </label>
         </p>
         <p>
@@ -47,8 +58,8 @@
         </p>
         <p>
             <label>
-                date de sortie (seul l'année sera prise en compte) :
-                <input type="date" name="date_sortie">
+                année de sortie :
+                <input type="number" name="date_sortie">
             </label>
         </p>
         <p>
