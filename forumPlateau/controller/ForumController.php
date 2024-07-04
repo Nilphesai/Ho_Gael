@@ -34,6 +34,15 @@ class ForumController extends AbstractController implements ControllerInterface{
         ];
     }
 
+    public function addTopics(){
+        $topicManager = new TopicManager();
+        $topicManager->add($_POST[]);
+        return ["view" => VIEW_DIR."forum/index.php",
+            "meta_description" => "inscription : "
+
+    ];
+    }
+
     public function listTopicsByCategory($id) {
 
         $topicManager = new TopicManager();
@@ -67,4 +76,6 @@ class ForumController extends AbstractController implements ControllerInterface{
             ]
         ];
     }
+
+
 }
