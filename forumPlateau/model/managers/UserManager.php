@@ -13,17 +13,4 @@ class UserManager extends Manager{
     public function __construct(){
         parent::connect();
     }
-
-    // récupérer tous les topics d'une catégorie spécifique (par son id)
-    public function addUser() {
-
-        $sql = "INSERT INTO ".$this->tableName." (nickName, password, email)
-                VALUES (".$_POST['nickName'].", ".$_POST['password'].", ".$_POST['email'].")";
-       
-        // la requête renvoie plusieurs enregistrements --> getMultipleResults
-        return  $this->getMultipleResults(
-            DAO::INSERT($sql), 
-            $this->className
-        );
-    }
 }

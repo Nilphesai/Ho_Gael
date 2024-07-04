@@ -12,13 +12,20 @@ class SecurityController extends AbstractController{
         $tab = [];
 
         if(isset($_POST['nickName'])){
-            foreach ($_POST as $key => $value){
-                $tab[$key] = $value;
+            $nickName = htmlspecialchars(filter_input(INPUT_POST, "nickName"));
+            $password = htmlspecialchars(filter_input(INPUT_POST, "password"));
+            $email = htmlspecialchars(filter_input(INPUT_POST, "email",FILTER_VALIDATE_EMAIL));
             
+            if ($nickName && $password){
+               
+                $tab['nickname'] = $nickName;
+                $tab['password'] = password_hash($password, PASSWORD_DEFAULT);
+                $tab['email'] = $email;
+                
+                $userManager = new UserManager();
+                $user = $userManager->add($tab);
             }
-            unset($tab['submit']);
-            $userManager = new UserManager();
-            $user = $userManager->add($tab);
+            
         }
     
     return [
@@ -29,7 +36,25 @@ class SecurityController extends AbstractController{
     }
 
     public function login () {
+        /*public static function setUser($user){
+            $_SESSION["user"] = $user;
+        }*/
+
         
+        $nickName = htmlspecialchars(filter_input(INPUT_POST, "nickName"));
+        $password = htmlspecialchars(filter_input(INPUT_POST, "password"));
+            
+        if ($nickName && $password){
+
+        }
+
+        session();
+        if(isset($_POST['nickName'])){
+            
+            unset($tab['submit']);
+            $userManager = new UserManager();
+            $user = $userManager->add($tab);
+        }
     }
 
     public function logout () {}
