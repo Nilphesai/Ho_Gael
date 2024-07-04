@@ -9,11 +9,18 @@ class SecurityController extends AbstractController{
     // contiendra les méthodes liées à l'authentification : register, login et logout
 
     public function register () {
+        $tab = [];
 
+        if(isset($_POST['nickName'])){
+            foreach ($_POST as $key => $value){
+                $tab[$key] = $value;
+            
+            }
+            unset($tab['submit']);
+            $userManager = new UserManager();
+            $user = $userManager->add($tab);
+        }
     
-    //$user = $usersManager->findAll(["nickname", "password", "email", "DESC"]);
-
-    // le controller communique avec la vue "listCategories" (view) pour lui envoyer la liste des catégories (data)
     return [
         "view" => VIEW_DIR."security/register.php",
         "meta_description" => "inscription au forum",
@@ -22,7 +29,7 @@ class SecurityController extends AbstractController{
     }
 
     public function login () {
-
+        
     }
 
     public function logout () {}

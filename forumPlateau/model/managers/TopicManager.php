@@ -28,8 +28,4 @@ class TopicManager extends Manager{
         );
     }
 
-    public function createTopic(){
-
-        
-    }
 }

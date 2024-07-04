@@ -17,5 +17,5 @@
                 <input type="password" name="password">
             </label>
         </p>
-        <P><input type="submit" name="submit" value="connexion">Connexion</p>
+        <P><input type="submit" name="submit" value="connexion"></p>
     </form>
