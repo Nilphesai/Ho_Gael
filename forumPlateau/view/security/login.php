@@ -1,6 +1,3 @@
-<?php
-    $users = $result["data"]['users']; 
-?>
 
 <h1>Connexion</h1>
 

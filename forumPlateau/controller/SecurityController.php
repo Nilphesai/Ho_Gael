@@ -17,9 +17,9 @@ class SecurityController extends AbstractController{
             $password2 = filter_input(INPUT_POST, "password2", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
             if($nickName && $email && $password && $password2){
-                // créer une nouvelle instance de CategoryManager
+                // créer une nouvelle instance de UserManager
                 $userManager = new UserManager();
-                // récupérer la liste de toutes les catégories grâce à la méthode findAll de Manager.php (triés par nom)
+                // récupérer la liste de toutes les Users grâce à la méthode findAll de Manager.php (triés par nom)
                 $users = $userManager->findAll(["nickName", "DESC"]);
                 foreach ($users as $row){
                     //var_dump($row->getNickname());die;
@@ -68,55 +68,58 @@ class SecurityController extends AbstractController{
         "view" => VIEW_DIR."security/register.php",
         "meta_description" => "entré incorrecte",
         "data" => []
-    ];
-        /*
-        $tab = [];
-        var_dump($_POST);die;
-        if(isset($_POST['nickName'])){
-            $nickName = htmlspecialchars(filter_input(INPUT_POST, "nickName"));
-            $password = htmlspecialchars(filter_input(INPUT_POST, "password"));
-            $email = htmlspecialchars(filter_input(INPUT_POST, "email",FILTER_VALIDATE_EMAIL));
-            
-            if ($nickName && $password){
-               
-                $tab['nickname'] = $nickName;
-                $tab['password'] = password_hash($password, PASSWORD_DEFAULT);
-                $tab['email'] = $email;
-                
-                $userManager = new UserManager();
-                $user = $userManager->add($tab);
-            }
-            
-        }
-    
-    return [
-        "view" => VIEW_DIR."security/register.php",
-        "meta_description" => "inscription au forum",
-        "data" => []
-    ];*/
+        ];    
     }
 
     public function login () {
-        /*public static function setUser($user){
-            $_SESSION["user"] = $user;
-        }*/
-
+        if(isset($_POST["submit"])){
         
-        $nickName = htmlspecialchars(filter_input(INPUT_POST, "nickName"));
-        $password = htmlspecialchars(filter_input(INPUT_POST, "password"));
+            $email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_VALIDATE_EMAIL);
+            $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             
-        if ($nickName && $password){
+            if($email && $password){
+                // créer une nouvelle instance de CategoryManager
+                $userManager = new UserManager();
+                // récupérer la liste de toutes les catégories grâce à la méthode findAll de Manager.php (triés par nom)
+                $users = $userManager->findAll(["nickName", "DESC"]);
+                foreach ($users as $user){
+                    //var_dump($row->getNickname());die;
+                    
+                    if($user->getNickname() == $nickName && $user->getPassword() == $password){
+                        $hash = $user->getPassword();
+                        if(password_verify($password, $hash)){
+                            $_SESSION["user"]=$user;
+                            return [
+                                "view" => VIEW_DIR."home.php",
+                                "meta_description" => "session ouverte",
+                                "data" => []
+                                ];    
+                        } else {
+                            return [
+                                "view" => VIEW_DIR."security/login.php",
+                                "meta_description" => "mot de passe incorrecte",
+                                "data" => []
+                                ];    
+                        }
+                    } else {
+                        return [
+                            "view" => VIEW_DIR."security/login.php",
+                            "meta_description" => "utilisateur introuvable",
+                            "data" => []
+                            ]; 
+                    }
+                }
 
+            }
         }
-
-        session();
-        if(isset($_POST['nickName'])){
-            
-            unset($tab['submit']);
-            $userManager = new UserManager();
-            $user = $userManager->add($tab);
-        }
+        return [
+            "view" => VIEW_DIR."security/login.php",
+            "meta_description" => "entré",
+            "data" => []
+            ];    
     }
 
-    public function logout () {}
+    public function logout () {
+
+    }
 }
