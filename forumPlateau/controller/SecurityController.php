@@ -3,6 +3,7 @@ namespace Controller;
 
 use App\AbstractController;
 use App\ControllerInterface;
+use App\Session;
 use Model\Managers\UserManager;
 
 class SecurityController extends AbstractController{
@@ -19,12 +20,10 @@ class SecurityController extends AbstractController{
             if($nickName && $email && $password && $password2){
                 // créer une nouvelle instance de UserManager
                 $userManager = new UserManager();
-                // récupérer la liste de toutes les Users grâce à la méthode findAll de Manager.php (triés par nom)
-                $users = $userManager->findAll(["nickName", "DESC"]);
-                foreach ($users as $row){
-                    //var_dump($row->getNickname());die;
-                    
-                    if($row->getNickname() == $nickName && $row->getEmail() == $email && $row->getPassword() == $password){
+                // chercher si User existe déjà
+                $users = $userManager->findUser($nickName,$email);
+                
+                    if($users){
                         return [
                             "view" => VIEW_DIR."security/register.php",
                             "meta_description" => "déjà enregistré",
@@ -62,7 +61,7 @@ class SecurityController extends AbstractController{
 
             }
 
-        } 
+         
 
         return [
         "view" => VIEW_DIR."security/register.php",
@@ -74,21 +73,20 @@ class SecurityController extends AbstractController{
     public function login () {
         if(isset($_POST["submit"])){
         
-            $email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_VALIDATE_EMAIL);
+            $nickName = filter_input(INPUT_POST, "nickName", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             
-            if($email && $password){
-                // créer une nouvelle instance de CategoryManager
+            if($nickName && $password){
+                // créer une nouvelle instance de UserManager
                 $userManager = new UserManager();
-                // récupérer la liste de toutes les catégories grâce à la méthode findAll de Manager.php (triés par nom)
-                $users = $userManager->findAll(["nickName", "DESC"]);
-                foreach ($users as $user){
-                    //var_dump($row->getNickname());die;
-                    
-                    if($user->getNickname() == $nickName && $user->getPassword() == $password){
-                        $hash = $user->getPassword();
+                // récupérer la liste des User grâce à la méthode findAll de Manager.php (triés par nom)
+                $users = $userManager->findUser($nickName, "");
+
+                    if($users){
+                        $hash = $users->getPassword();
                         if(password_verify($password, $hash)){
-                            $_SESSION["user"]=$user;
+                            $session = new Session();
+                            $session->setUser($users);
                             return [
                                 "view" => VIEW_DIR."home.php",
                                 "meta_description" => "session ouverte",
@@ -108,9 +106,9 @@ class SecurityController extends AbstractController{
                             "data" => []
                             ]; 
                     }
-                }
-
             }
+
+            
         }
         return [
             "view" => VIEW_DIR."security/login.php",
@@ -121,5 +119,12 @@ class SecurityController extends AbstractController{
 
     public function logout () {
 
+        unset($_SESSION["user"]);
+        
+        return [
+            "view" => VIEW_DIR."home.php",
+            "meta_description" => "session ouverte",
+            "data" => []
+            ];
     }
 }

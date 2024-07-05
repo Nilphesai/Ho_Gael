@@ -13,4 +13,17 @@ class UserManager extends Manager{
     public function __construct(){
         parent::connect();
     }
+
+    public function findUser($nickName, $email){
+
+        $sql = "SELECT *
+                FROM ".$this->tableName." a
+                WHERE a.nickName = :nickName OR a.email = :email
+                ";
+
+        return $this->getOneOrNullResult(
+            DAO::select($sql, ['nickName' => $nickName, 'email' => $email], false), 
+            $this->className
+        );
+    }
 }
