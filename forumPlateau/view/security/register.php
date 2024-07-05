@@ -16,6 +16,12 @@
         </p>
         <p>
             <label>
+                confirmation du mot de passe :
+                <input type="password" name="password2">
+            </label>
+        </p>
+        <p>
+            <label>
                 adresse email :
                 <input type="text" name="email">
             </label>
