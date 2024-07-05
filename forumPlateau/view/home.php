@@ -10,5 +10,7 @@ if(isset($_SESSION["user"])){ ?>
             <a href="traitement.php?action=login"> Se connecté</a>
             <span>&nbsp;-&nbsp;</span>
             <a href="traitement.php?action=register"> S'inscrire</a>
-            <?php } ?>
+            <?php } 
+            ?>
+    
 </p>

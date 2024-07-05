@@ -9,7 +9,7 @@
 <tr>
 <?php
 foreach($posts as $post ){ ?>
-    <td>par <?= $post->getUser() ?></td></br>
+    <td>par <?= $post->getUser() ?> le <?= $post->getcreationDate() ?></td></br>
     <td><?= $post->getText() ?> </td></br></br>
     
 <?php }?>

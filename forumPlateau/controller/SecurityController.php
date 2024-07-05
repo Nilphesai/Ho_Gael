@@ -9,7 +9,12 @@ use Model\Managers\UserManager;
 class SecurityController extends AbstractController{
     public function profile () {
         $userManager = new UserManager();
-        $user = $_SESSION["user"];
+        if (isset($_GET['id'])){
+            $user = $userManager->findOneById($_GET['id']);
+        }
+        else{
+            $user = $_SESSION["user"];
+        }
         return [
             "view" => VIEW_DIR."security/profile.php",
             "meta_description" => "profile",
