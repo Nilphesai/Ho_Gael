@@ -7,6 +7,18 @@ use App\Session;
 use Model\Managers\UserManager;
 
 class SecurityController extends AbstractController{
+    public function profile () {
+        $userManager = new UserManager();
+        $user = $_SESSION["user"];
+        return [
+            "view" => VIEW_DIR."security/profile.php",
+            "meta_description" => "profile",
+            "data" => [
+                "user" => $user
+            ]
+        ];
+    }
+    
     // contiendra les méthodes liées à l'authentification : register, login et logout
 
     public function register () {
@@ -107,7 +119,6 @@ class SecurityController extends AbstractController{
                             ]; 
                     }
             }
-
             
         }
         return [

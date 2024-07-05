@@ -19,7 +19,7 @@
                 <header>
                     <nav>
                         <div id="nav-left">
-                            <a href="/">Accueil</a>
+                            <a href="/Ho_Gael/forumPlateau/">Accueil</a>
                             <?php
                             if(App\Session::isAdmin()){
                                 ?>
