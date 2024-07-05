@@ -34,10 +34,16 @@ class ForumController extends AbstractController implements ControllerInterface{
         ];
     }
 
-    public function addTopics(){
+    public function addTopic(){
         $topicManager = new TopicManager();
-        $topicManager->add($_POST[]);
-        return ["view" => VIEW_DIR."forum/index.php",
+        $newTopic = [];
+        $newTopic['title'] = $_POST['title'];
+        $newTopic['title'] = $_POST['title'];
+        $newTopic['id_category'] = $_GET['id'];
+        $newTopic['id_user'] = $_SESSION['user']->getid();
+        //var_dump($newTopic);die;
+        $topicManager->add($newTopic);
+        return ["view" => VIEW_DIR."forum/listTopics.php",
             "meta_description" => "inscription : "
 
     ];

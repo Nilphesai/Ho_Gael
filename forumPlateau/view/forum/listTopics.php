@@ -12,10 +12,10 @@ foreach($topics as $topic ){ ?>
 
 <h1>nouveau Topic</h1>
 
-    <form id="formPrincipal" action="index.php?ctrl=forum&action=addTopic" method="post">
+    <form id="formPrincipal" action="index.php?ctrl=forum&action=addTopic&id=<?=$category->getId()?>" method="post">
         <p>
             <label>
-                Pseudo :
+                titre :
                 <input type="text" name="title">
             </label>
         </p>
