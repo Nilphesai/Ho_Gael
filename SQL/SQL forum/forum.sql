@@ -50,8 +50,8 @@ CREATE TABLE IF NOT EXISTS `post` (
 INSERT INTO `post` (`id_post`, `text`, `creationDate`, `topic_id`, `user_id`) VALUES
 	(1, 'Les poivrons rouge sont meilleurs que les vert !', '2024-07-02 13:40:06', 2, 3),
 	(2, 'Non, les poivrons vert sont meilleurs !', '2024-07-02 13:40:44', 2, 2),
-	(3, 'Les règles ici : et j\'ai pas de pavé pour des règles existantes, donc supposé qu\'elles sont ici, ok ?', '2024-07-02 13:41:33', 1, 1),
-	(4, 'Contenue non écrit parce que malvenu de l\'écrire...', '2024-07-02 13:42:22', 3, 3);
+	(3, 'Les règles ici : et jai pas de pavé pour des règles existantes, donc supposé quelles sont ici, ok ?', '2024-07-02 13:41:33', 1, 1),
+	(4, 'Contenue non écrit parce que malvenu de l écrire...', '2024-07-02 13:42:22', 3, 3);
 
 -- Listage de la structure de table forum. topic
 CREATE TABLE IF NOT EXISTS `topic` (
