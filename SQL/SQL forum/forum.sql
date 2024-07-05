@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `category` (
   PRIMARY KEY (`id_category`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Listage des données de la table forum.category : ~2 rows (environ)
+-- Listage des données de la table forum.category : ~3 rows (environ)
 INSERT INTO `category` (`id_category`, `name`) VALUES
 	(1, 'Serveur'),
 	(2, 'Principal'),
@@ -50,8 +50,8 @@ CREATE TABLE IF NOT EXISTS `post` (
 INSERT INTO `post` (`id_post`, `text`, `creationDate`, `topic_id`, `user_id`) VALUES
 	(1, 'Les poivrons rouge sont meilleurs que les vert !', '2024-07-02 13:40:06', 2, 3),
 	(2, 'Non, les poivrons vert sont meilleurs !', '2024-07-02 13:40:44', 2, 2),
-	(3, 'Les règles ici : et jai pas de pavé pour des règles existantes, donc supposé quelles sont ici, ok ?', '2024-07-02 13:41:33', 1, 1),
-	(4, 'Contenue non écrit parce que malvenu de l écrire...', '2024-07-02 13:42:22', 3, 3);
+	(3, 'Les règles ici : et j\'ai pas de pavé pour des règles existantes, donc supposé qu\'elles sont ici, ok ?', '2024-07-02 13:41:33', 1, 1),
+	(4, 'Contenue non écrit parce que malvenu de l\'écrire...', '2024-07-02 13:42:22', 3, 3);
 
 -- Listage de la structure de table forum. topic
 CREATE TABLE IF NOT EXISTS `topic` (
@@ -81,15 +81,16 @@ CREATE TABLE IF NOT EXISTS `user` (
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `signDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `email` varchar(255) NOT NULL DEFAULT '',
-  `role` varchar(50) NOT NULL DEFAULT '',
+  `role` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'ROLE_USER',
   PRIMARY KEY (`id_user`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Listage des données de la table forum.user : ~3 rows (environ)
 INSERT INTO `user` (`id_user`, `nickName`, `password`, `signDate`, `email`, `role`) VALUES
-	(1, 'Dieu', '123456', '2024-07-02 13:35:08', 'Dieu@gmail.fr', 'Admin'),
-	(2, 'vagabond', '654321', '2024-07-02 13:36:14', 'vagabon@hotmail.com', 'membre'),
-	(3, 'etranger', 'azerty', '2024-07-02 13:36:46', 'etranger@hootlook.fr', 'membre');
+	(1, 'Dieu', '123456', '2024-07-02 13:35:08', 'Dieu@gmail.fr', 'ROLE_ADMIN'),
+	(2, 'vagabond', '654321', '2024-07-02 13:36:14', 'vagabon@hotmail.com', 'ROLE_USER'),
+	(3, 'etranger', 'azerty', '2024-07-02 13:36:46', 'etranger@hootlook.fr', 'ROLE_USER'),
+	(4, 'azertyuiop', '$2y$10$C80Lc973qa2DYR.W3tL4leAB23znhtHXeW25BEXbYD5.KUHzjPLjO', '2024-07-05 11:40:23', 'azertyuiop@gamil.com', 'ROLE_ADMIN');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
