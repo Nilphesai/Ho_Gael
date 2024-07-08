@@ -7,10 +7,13 @@
 
     <tbody>
     <?php 
-    if(App\Session::getUser() == $topic->getUser() || App\Session::isAdmin()){ ?>
-    <p><a href="index.php?ctrl=forum&action=lockTopic&id=<?= $topic->getId() ?>">lock</a></p>
-    <?php }?>
-    <tr>
+    if((App\Session::getUser() == $topic->getUser() || App\Session::isAdmin()) && $topic->getClosed()==0 ){ ?>
+        <p><a href="index.php?ctrl=forum&action=lockTopic&id=<?= $topic->getId() ?>">Locked</a></p>
+    <?php }
+    else if((App\Session::getUser() == $topic->getUser() || App\Session::isAdmin()) && $topic->getClosed()==1){?>
+        <p><a href="index.php?ctrl=forum&action=lockTopic&id=<?= $topic->getId() ?>">Unlocked</a></p>
+        <?php }?>
+        <tr>
 <?php
 foreach($posts as $post ){ ?>
     <td>par <?= $post->getUser() ?> le <?= $post->getcreationDate() ?></td></br>

@@ -70,11 +70,13 @@ class ForumController extends AbstractController implements ControllerInterface{
         $postManager->add($newPost);
 
         $categoryManager = new CategoryManager();
+        $listCategories = $categoryManager->findAll();
         $category = $categoryManager->findOneById($_GET['id']);
         $topics = $topicManager->findTopicsByCategory($_GET['id']);
         return ["view" => VIEW_DIR."forum/listTopics.php",
             "meta_description" => " : ",
             "data" => [
+                "listCategories" => $listCategories,
                 "category" => $category,
                 "topics" => $topics
             ]
@@ -84,25 +86,30 @@ class ForumController extends AbstractController implements ControllerInterface{
 
     public function addPost(){
 
-        $postManager = new PostManager();
         
-        $newPost = [];
-        $newPost['text'] = $_POST['text'];
-        $newPost['topic_id'] = $_GET['id'];
-        $newPost['user_id'] = $_SESSION['user']->getid();
-        $postManager->add($newPost);
-
-        $posts = $postManager->findPostsByTopic($_GET['id']);
         $topicManager = new TopicManager();
         $topic = $topicManager->findOneById($_GET['id']);
+        $postManager = new PostManager();
+
+        if ($topic->getClosed() == 0){
+            
+            $newPost = [];
+            $newPost['text'] = $_POST['text'];
+            $newPost['topic_id'] = $_GET['id'];
+            $newPost['user_id'] = $_SESSION['user']->getid();
+            $postManager->add($newPost);
+            
+            
+        }
         
+        $posts = $postManager->findPostsByTopic($_GET['id']);
         return ["view" => VIEW_DIR."forum/listPosts.php",
-            "meta_description" => "messages : ",
-            "data" => [
-                "topic" => $topic,
-                "posts" => $posts
-            ]
-        ];
+                "meta_description" => "messages : ",
+                "data" => [
+                    "topic" => $topic,
+                    "posts" => $posts
+                ]
+            ];
     }
 
     public function listTopicsByCategory($id) {
@@ -158,6 +165,7 @@ class ForumController extends AbstractController implements ControllerInterface{
         $topicManager->modify($switchPost,$_GET['id']);
 
         $postManager = new PostManager();
+        $topic = $topicManager->findOneById($_GET['id']);
         $posts = $postManager->findPostsByTopic($_GET['id']);
 
         return [
