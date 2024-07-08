@@ -110,7 +110,7 @@ class ForumController extends AbstractController implements ControllerInterface{
         $topicManager = new TopicManager();
         $categoryManager = new CategoryManager();
 
-        $listCategories = $categoryManager->findAll(["id_category", ""]);
+        $listCategories = $categoryManager->findAll();
         $category = $categoryManager->findOneById($id);
         $topics = $topicManager->findTopicsByCategory($id);
 

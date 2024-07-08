@@ -16,7 +16,7 @@ foreach($posts as $post ){ ?>
 </tr>
 </tbody>
 <?php 
-if($topic->getClosed() == 0 || App\Session::isAdmin()){ ?>
+if(($topic->getClosed() == 0 && App\Session::getUser()) || App\Session::isAdmin()){ ?>
     <h1>nouveau Post</h1>
 
     <form id="formPrincipal" action="index.php?ctrl=forum&action=addPost&id=<?=$topic->getId()?>" method="post">
