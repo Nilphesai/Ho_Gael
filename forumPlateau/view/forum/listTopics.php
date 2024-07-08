@@ -9,6 +9,7 @@
 <?php
 if(isset($topics)){
 
+    //création d'une table, pour garder les valeurs plutôt que d'avoir des constructeurs
     $tab=[];
     foreach ($listCategories as $cat) {
         # code...
@@ -17,31 +18,24 @@ if(isset($topics)){
             "name" => $cat->getName()
         ];
     }
-    // var_dump($tab);die;
 
     foreach($topics as $topic){ ?>
         
         <p><a href="index.php?ctrl=forum&action=listPostsByTopics&id=<?= $topic->getId() ?>"><?= $topic ?></a> par <?= $topic->getUser() ?> le <?= $topic->getcreationDate() ?>
         <?php
-        //var_dump("ping"); die;
+
+        
+
+        //liste des catégories
         if(App\Session::isAdmin()) { ?>
             <label for="Category-select">move Topic :</label>
-
             <select name="listCategory" id="Category-select"<?=$topic->getId()?>>
             <option value="">--Please choose an option--</option>
             <?php
+                foreach($tab as $categ) { ?>
+                    <option value=<?=$categ["id"]?><?= $topic->getId() ?>><?=$categ["name"]?></option>      
             
-            //var_dump($categ); die;
-                //ne se parcours qu'une fois puis se ferme
-                
-                foreach($tab as $categ) { 
-                    ?>
-                        
-                        <option value=<?=$categ["id"]?><?= $topic->getId() ?>><?=$categ["name"]?></option>      
-            
-            <?php ;}
-            unset($categ)
-             ?>
+            <?php ;}?>
                 </select>
         <?php } ?>
 

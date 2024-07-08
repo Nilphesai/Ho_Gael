@@ -142,5 +142,38 @@ class ForumController extends AbstractController implements ControllerInterface{
         ];
     }
 
+    public function lockTopic(){
+        
+        $topicManager = new TopicManager();
+        $topic = $topicManager->findOneById($_GET['id']);
+
+        $switchPost = [];
+        if ($topic->getClosed() == 1){
+            $switchPost['closed'] = 0;
+        } else{
+            $switchPost['closed'] = 1;
+        }
+        //var_dump($switchPost);die;
+
+        $topicManager->modify($switchPost,$_GET['id']);
+
+        $categoryManager = new CategoryManager();
+
+        $listCategories = $categoryManager->findAll();
+        $category = $categoryManager->findOneById($_GET['id']);
+        $topics = $topicManager->findTopicsByCategory($_GET['id']);
+
+        return [
+            "view" => VIEW_DIR."forum/listTopics.php",
+            "meta_description" => "Liste des topics par catégorie : ".$category,
+            "data" => [
+                "listCategories" => $listCategories,
+                "category" => $category,
+                "topics" => $topics
+            ]
+        ];
+            
+    }
+
 
 }

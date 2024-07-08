@@ -6,6 +6,7 @@
 <h1>Liste des posts</h1>
 
     <tbody>
+    <p><a href="index.php?ctrl=forum&action=lockTopic&id=<?= $topic->getId() ?>">lock</a></p>
 <tr>
 <?php
 foreach($posts as $post ){ ?>
