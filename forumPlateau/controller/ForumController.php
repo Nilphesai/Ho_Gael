@@ -22,7 +22,7 @@ class ForumController extends AbstractController implements ControllerInterface{
         // créer une nouvelle instance de CategoryManager
         $categoryManager = new CategoryManager();
         // récupérer la liste de toutes les catégories grâce à la méthode findAll de Manager.php (triés par nom)
-        $categories = $categoryManager->findAll(["name", "DESC"]);
+        $categories = $categoryManager->findAll(["id_category", ""]);
 
         // le controller communique avec la vue "listCategories" (view) pour lui envoyer la liste des catégories (data)
         return [
@@ -32,6 +32,23 @@ class ForumController extends AbstractController implements ControllerInterface{
                 "categories" => $categories
             ]
         ];
+    }
+
+    public function addCategory(){
+        $categoryManager = new CategoryManager();
+        $newCategory = [];
+        $newCategory['name'] = $_POST['name'];
+        //var_dump($newTopic);die;
+        $categoryManager->add($newCategory);
+
+        $categories = $categoryManager->findAll(["id_category", ""]);
+        return ["view" => VIEW_DIR."forum/listCategories.php",
+            "meta_description" => "Liste des catégories du forum",
+            "data" => [
+                "categories" => $categories
+            ]
+
+    ];
     }
     
     public function addTopic(){

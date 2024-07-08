@@ -15,8 +15,9 @@ foreach($posts as $post ){ ?>
 <?php }?>
 </tr>
 </tbody>
-
-<h1>nouveau Post</h1>
+<?php 
+if($topic->getClosed() == 0 || App\Session::isAdmin()){ ?>
+    <h1>nouveau Post</h1>
 
     <form id="formPrincipal" action="index.php?ctrl=forum&action=addPost&id=<?=$topic->getId()?>" method="post">
         <p>
@@ -27,3 +28,4 @@ foreach($posts as $post ){ ?>
         </p>
         <P><input type="submit" value="newPost"></p>
     </form>
+<?php }?>
