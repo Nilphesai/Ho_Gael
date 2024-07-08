@@ -19,5 +19,11 @@ foreach($topics as $topic ){ ?>
                 <input type="text" name="title">
             </label>
         </p>
+        <p>
+            <label>
+                Post :
+                <textarea  name="text"></textarea>
+            </label>
+        </p>
         <P><input type="submit" value="newTopic"></p>
     </form>

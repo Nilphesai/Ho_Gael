@@ -28,4 +28,17 @@ class TopicManager extends Manager{
         );
     }
 
+    public function findTopic($title, $user, $category){
+
+        $sql = "SELECT *
+                FROM ".$this->tableName." a
+                WHERE a.title = :title AND a.user_id = :user AND a.category_id = :category
+                ";
+
+        return $this->getOneOrNullResult(
+            DAO::select($sql, ['title' => $title, 'user' => $user, 'category' => $category], false), 
+            $this->className
+        );
+    }
+
 }

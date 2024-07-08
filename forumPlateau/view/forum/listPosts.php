@@ -15,3 +15,15 @@ foreach($posts as $post ){ ?>
 <?php }?>
 </tr>
 </tbody>
+
+<h1>nouveau Post</h1>
+
+    <form id="formPrincipal" action="index.php?ctrl=forum&action=addPost&id=<?=$topic->getId()?>" method="post">
+        <p>
+            <label>
+                Post :
+                <textarea  name="text"></textarea>
+            </label>
+        </p>
+        <P><input type="submit" value="newPost"></p>
+    </form>

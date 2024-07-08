@@ -33,20 +33,59 @@ class ForumController extends AbstractController implements ControllerInterface{
             ]
         ];
     }
-
+    
     public function addTopic(){
         $topicManager = new TopicManager();
         $newTopic = [];
         $newTopic['title'] = $_POST['title'];
-        $newTopic['title'] = $_POST['title'];
-        $newTopic['id_category'] = $_GET['id'];
-        $newTopic['id_user'] = $_SESSION['user']->getid();
+        $newTopic['category_id'] = $_GET['id'];
+        $newTopic['user_id'] = $_SESSION['user']->getid();
         //var_dump($newTopic);die;
         $topicManager->add($newTopic);
+        $theNewTopic = $topicManager->findTopic($_POST['title'], $_SESSION['user']->getid(), $_GET['id']);
+        
+        $postManager = new PostManager();
+        
+        $newPost = [];
+        $newPost['text'] = $_POST['text'];
+        $newPost['topic_id'] = $theNewTopic->getId();
+        $newPost['user_id'] = $_SESSION['user']->getid();
+        $postManager->add($newPost);
+
+        $categoryManager = new CategoryManager();
+        $category = $categoryManager->findOneById($_GET['id']);
+        $topics = $topicManager->findTopicsByCategory($_GET['id']);
         return ["view" => VIEW_DIR."forum/listTopics.php",
-            "meta_description" => "inscription : "
+            "meta_description" => " : ",
+            "data" => [
+                "category" => $category,
+                "topics" => $topics
+            ]
 
     ];
+    }
+
+    public function addPost(){
+
+        $postManager = new PostManager();
+        
+        $newPost = [];
+        $newPost['text'] = $_POST['text'];
+        $newPost['topic_id'] = $_GET['id'];
+        $newPost['user_id'] = $_SESSION['user']->getid();
+        $postManager->add($newPost);
+
+        $posts = $postManager->findPostsByTopic($_GET['id']);
+        $topicManager = new TopicManager();
+        $topic = $topicManager->findOneById($_GET['id']);
+        
+        return ["view" => VIEW_DIR."forum/listPosts.php",
+            "meta_description" => "messages : ",
+            "data" => [
+                "topic" => $topic,
+                "posts" => $posts
+            ]
+        ];
     }
 
     public function listTopicsByCategory($id) {
