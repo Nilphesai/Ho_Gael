@@ -157,19 +157,15 @@ class ForumController extends AbstractController implements ControllerInterface{
 
         $topicManager->modify($switchPost,$_GET['id']);
 
-        $categoryManager = new CategoryManager();
-
-        $listCategories = $categoryManager->findAll();
-        $category = $categoryManager->findOneById($_GET['id']);
-        $topics = $topicManager->findTopicsByCategory($_GET['id']);
+        $postManager = new PostManager();
+        $posts = $postManager->findPostsByTopic($_GET['id']);
 
         return [
-            "view" => VIEW_DIR."forum/listTopics.php",
-            "meta_description" => "Liste des topics par catégorie : ".$category,
+            "view" => VIEW_DIR."forum/listPosts.php",
+            "meta_description" => "Liste des Posts par topic : ".$topic,
             "data" => [
-                "listCategories" => $listCategories,
-                "category" => $category,
-                "topics" => $topics
+                "topic" => $topic,
+                "posts" => $posts
             ]
         ];
             

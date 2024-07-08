@@ -24,7 +24,7 @@ if(isset($topics)){
         <p><a href="index.php?ctrl=forum&action=listPostsByTopics&id=<?= $topic->getId() ?>"><?= $topic ?></a> par <?= $topic->getUser() ?> le <?= $topic->getcreationDate() ?>
         <?php
 
-        
+
 
         //liste des catégories
         if(App\Session::isAdmin()) { ?>

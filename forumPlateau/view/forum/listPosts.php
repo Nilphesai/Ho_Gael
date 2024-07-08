@@ -6,8 +6,11 @@
 <h1>Liste des posts</h1>
 
     <tbody>
+    <?php 
+    if(App\Session::getUser() == $topic->getUser() || App\Session::isAdmin()){ ?>
     <p><a href="index.php?ctrl=forum&action=lockTopic&id=<?= $topic->getId() ?>">lock</a></p>
-<tr>
+    <?php }?>
+    <tr>
 <?php
 foreach($posts as $post ){ ?>
     <td>par <?= $post->getUser() ?> le <?= $post->getcreationDate() ?></td></br>
