@@ -109,6 +109,8 @@ class ForumController extends AbstractController implements ControllerInterface{
 
         $topicManager = new TopicManager();
         $categoryManager = new CategoryManager();
+
+        $listCategories = $categoryManager->findAll(["id_category", ""]);
         $category = $categoryManager->findOneById($id);
         $topics = $topicManager->findTopicsByCategory($id);
 
@@ -116,6 +118,7 @@ class ForumController extends AbstractController implements ControllerInterface{
             "view" => VIEW_DIR."forum/listTopics.php",
             "meta_description" => "Liste des topics par catégorie : ".$category,
             "data" => [
+                "listCategories" => $listCategories,
                 "category" => $category,
                 "topics" => $topics
             ]

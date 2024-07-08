@@ -1,4 +1,5 @@
 <?php
+    $listCategories = $result["data"]["listCategories"];
     $category = $result["data"]['category']; 
     $topics = $result["data"]['topics']; 
 ?>
@@ -8,10 +9,34 @@
 <?php
 if(isset($topics)){
     foreach($topics as $topic){ ?>
-        <p><a href="index.php?ctrl=forum&action=listPostsByTopics&id=<?= $topic->getId() ?>"><?= $topic ?></a> par <?= $topic->getUser() ?> le <?= $topic->getcreationDate() ?></p>
+        
+        <p><a href="index.php?ctrl=forum&action=listPostsByTopics&id=<?= $topic->getId() ?>"><?= $topic ?></a> par <?= $topic->getUser() ?> le <?= $topic->getcreationDate() ?>
+        <?php
+        //var_dump("ping"); die;
+        if(App\Session::isAdmin()) { ?>
+            <label for="Category-select">move Topic :</label>
+
+            <select name="listCategory" id="Category-select"<?=$topic->getId()?>>
+            <option value="">--Please choose an option--</option>
+            <?php
+            
+            //var_dump($categ); die;
+                //ne se parcours qu'une fois puis se ferme
+                foreach($listCategories as $categ) { 
+                    var_dump($categ);?>
+                        
+                        <option value=<?=$categ->getId()?><?= $topic->getId() ?>><?=$categ->getName()?></option>      
+            <?php } ?>
+                </select>
+        <?php } ?>
+
+        
+        
+    </p>
+    
     <?php }
 } else{
-    echo " pas de topics";
+    echo "pas de topics";
 }?>
 
 <?php 
