@@ -1,6 +1,11 @@
 <?php
     $topic = $result["data"]['topic']; 
     $posts = $result["data"]['posts']; 
+    
+    if (App\Session::isAdmin() == false && ($topic == false || empty($posts))) {
+        // Redirige vers une autre page
+        header('Location:./index.php');
+    }
 ?>
 
 <h1>Liste des posts</h1>
@@ -33,6 +38,6 @@ if(($topic->getClosed() == 0 && App\Session::getUser()) || App\Session::isAdmin(
                 <textarea  name="text"></textarea>
             </label>
         </p>
-        <P><input type="submit" value="newPost"></p>
+        <P><input type="submit" name="submit" value="submit"></p>
     </form>
 <?php }?>

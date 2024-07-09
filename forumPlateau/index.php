@@ -44,6 +44,7 @@ if(isset($_GET['id'])){
     $id = $_GET['id'];
 }
 else $id = null;
+
 //ex : HomeController->users(null)
 $result = $ctrl->$action($id);
 

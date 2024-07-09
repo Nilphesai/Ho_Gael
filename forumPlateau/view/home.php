@@ -7,9 +7,9 @@
 if(isset($_SESSION["user"])){ ?>
     <a> Bienvenue <?=$_SESSION["user"]?></a>
         <?php } else{ ?>
-            <a href="traitement.php?action=login"> Se connecté</a>
+            <a href="index.php?ctrl=security&action=login"> Se connecté</a>
             <span>&nbsp;-&nbsp;</span>
-            <a href="traitement.php?action=register"> S'inscrire</a>
+            <a href="index.php?ctrl=security&action=register"> S'inscrire</a>
             <?php } 
             ?>
     

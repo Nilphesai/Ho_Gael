@@ -38,9 +38,9 @@ class ForumController extends AbstractController implements ControllerInterface{
         $categoryManager = new CategoryManager();
         $newCategory = [];
         $newCategory['name'] = $_POST['name'];
-        //var_dump($newTopic);die;
-        $categoryManager->add($newCategory);
-
+        if (isset($_POST["submit"])){
+            $categoryManager->add($newCategory);
+        }
         $categories = $categoryManager->findAll(["id_category", ""]);
         return ["view" => VIEW_DIR."forum/listCategories.php",
             "meta_description" => "Liste des catégories du forum",
@@ -53,22 +53,26 @@ class ForumController extends AbstractController implements ControllerInterface{
     
     public function addTopic(){
         $topicManager = new TopicManager();
-        $newTopic = [];
-        $newTopic['title'] = $_POST['title'];
-        $newTopic['category_id'] = $_GET['id'];
-        $newTopic['user_id'] = $_SESSION['user']->getid();
+        
         //var_dump($newTopic);die;
-        $topicManager->add($newTopic);
-        $theNewTopic = $topicManager->findTopic($_POST['title'], $_SESSION['user']->getid(), $_GET['id']);
-        
-        $postManager = new PostManager();
-        
-        $newPost = [];
-        $newPost['text'] = $_POST['text'];
-        $newPost['topic_id'] = $theNewTopic->getId();
-        $newPost['user_id'] = $_SESSION['user']->getid();
-        $postManager->add($newPost);
+        if (isset($_POST["submit"])){
+            $newTopic = [];
+            $newTopic['title'] = $_POST['title'];
+            $newTopic['category_id'] = $_GET['id'];
+            $newTopic['user_id'] = $_SESSION['user']->getid();
+            $topicManager->add($newTopic);
 
+            $theNewTopic = $topicManager->findTopic($_POST['title'], $_SESSION['user']->getid(), $_GET['id']);
+        
+            $postManager = new PostManager();
+            
+            $newPost = [];
+            $newPost['text'] = $_POST['text'];
+            $newPost['topic_id'] = $theNewTopic->getId();
+            $newPost['user_id'] = $_SESSION['user']->getid();
+            $postManager->add($newPost);
+        }
+        
         $categoryManager = new CategoryManager();
         $listCategories = $categoryManager->findAll();
         $category = $categoryManager->findOneById($_GET['id']);
@@ -86,12 +90,11 @@ class ForumController extends AbstractController implements ControllerInterface{
 
     public function addPost(){
 
-        
         $topicManager = new TopicManager();
         $topic = $topicManager->findOneById($_GET['id']);
         $postManager = new PostManager();
-
-        if ($topic->getClosed() == 0){
+        //var_dump($_POST);
+        if (isset($_POST["submit"]) && $topic->getClosed() == 0){
             
             $newPost = [];
             $newPost['text'] = $_POST['text'];

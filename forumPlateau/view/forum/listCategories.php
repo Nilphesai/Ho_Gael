@@ -1,5 +1,9 @@
 <?php
-    $categories = $result["data"]['categories']; 
+    $categories = $result["data"]['categories'];
+    if (empty($categories) && App\Session::isAdmin() == false) {
+        // Redirige vers une autre page
+        header('Location:./index.php');
+    }
 ?>
 
 <h1>Liste des catégories</h1>
@@ -19,6 +23,6 @@ if(App\Session::isAdmin()){ ?>
                     <textarea  name="name"></textarea>
                 </label>
             </p>
-            <P><input type="submit" value="newPost"></p>
+            <P><input type="submit" name="submit" value="submit"></p>
         </form>
 <?php }?>

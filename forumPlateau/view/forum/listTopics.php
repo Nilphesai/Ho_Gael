@@ -1,10 +1,17 @@
 <?php
     $listCategories = $result["data"]["listCategories"];
     $category = $result["data"]['category']; 
-    $topics = $result["data"]['topics']; 
+    $topics = $result["data"]['topics'];
+
+    if (($category == false || empty($topics)) && App\Session::isAdmin() == false) {
+        // Redirige vers une autre page
+        header('Location:./index.php');
+    }
 ?>
 
-<h1>Liste des topics de <?= $category->getName() ?></h1>
+?>
+
+<h1>Liste des topics</h1>
 
 <?php
 if(isset($topics)){
@@ -65,6 +72,6 @@ if((App\Session::isAdmin() || ($category->getId() != 1 && $category->getId() != 
                     <textarea  name="text"></textarea>
                 </label>
             </p>
-            <P><input type="submit" value="newTopic"></p>
+            <P><input type="submit" name ="submit" value="submit"></p>
         </form>
 <?php }?>
