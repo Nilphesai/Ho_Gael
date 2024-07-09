@@ -115,6 +115,33 @@ class ForumController extends AbstractController implements ControllerInterface{
             ];
     }
 
+    public function moveTopic(){
+        $topicManager = new TopicManager();
+        
+        //var_dump($newTopic);die;
+        if (isset($_POST["submit"])){
+            $newTopic = [];
+            
+            $moveIn['category_id'] = $_POST['category'];
+            //var_dump($_POST);die;
+            $topicManager->modify($moveIn,$_GET['id']);
+        }
+        
+        $categoryManager = new CategoryManager();
+        $listCategories = $categoryManager->findAll();
+        $category = $categoryManager->findOneById($_POST['category']);
+        $topics = $topicManager->findTopicsByCategory($_POST['category']);
+        return ["view" => VIEW_DIR."forum/listTopics.php",
+            "meta_description" => " : ",
+            "data" => [
+                "listCategories" => $listCategories,
+                "category" => $category,
+                "topics" => $topics
+            ]
+
+    ];
+    }
+
     public function listTopicsByCategory($id) {
 
         $topicManager = new TopicManager();

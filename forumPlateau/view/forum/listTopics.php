@@ -31,23 +31,22 @@ if(isset($topics)){
         <p><a href="index.php?ctrl=forum&action=listPostsByTopics&id=<?= $topic->getId() ?>"><?= $topic ?></a> par <?= $topic->getUser() ?> le <?= $topic->getcreationDate() ?>
         <?php
 
-
-
         //liste des catégories
         if(App\Session::isAdmin()) { ?>
+            <form id="formMove" action="index.php?ctrl=forum&action=moveTopic&id=<?=$topic->getId()?>" method="post">
             <label for="Category-select">move Topic :</label>
-            <select name="listCategory" id="Category-select"<?=$topic->getId()?>>
+            <select name="category" id="Category-select"<?=$topic->getId()?>>
             <option value="">--Please choose an option--</option>
             <?php
                 foreach($tab as $categ) { ?>
-                    <option value=<?=$categ["id"]?><?= $topic->getId() ?>><?=$categ["name"]?></option>      
-            
+                    <option value=<?=$categ["id"]?>><?=$categ["name"]?></option>      
+                    
             <?php ;}?>
-                </select>
+            <P><input type="submit" name ="submit" value="move"></p>    
+            </select>
+                </form>
         <?php } ?>
 
-        
-        
     </p>
     
     <?php }
