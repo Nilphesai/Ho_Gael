@@ -142,6 +142,72 @@ class ForumController extends AbstractController implements ControllerInterface{
     ];
     }
 
+    public function deleteCategory(){
+        $categoryManager = new CategoryManager();
+        $topicManager = new TopicManager();
+        $topics = $topicManager->findTopicsByCategory($_GET['id']);
+        if (!isset($topics)){
+            $categoryManager->delete($_GET['id']);
+        }
+        else{
+            $categories = $categoryManager->findAll(["id_category", ""]);
+            return ["view" => VIEW_DIR."forum/listCategories.php",
+                "meta_description" => "Liste des catégories du forum",
+                "data" => [
+                "categories" => $categories
+            ]
+
+            ];
+        }
+        $categories = $categoryManager->findAll(["id_category", ""]);
+        return ["view" => VIEW_DIR."forum/listCategories.php",
+                "meta_description" => "Liste des catégories du forum",
+                "data" => [
+                "categories" => $categories
+            ]
+
+        ];
+
+    }
+
+    public function deleteTopics(){
+        $topicManager = new TopicManager();
+        $postManager = new PostManager();
+        //var_dump($_GET['id']);die;
+        $posts = $postManager->findPostsByTopic($_GET['id']);
+        $tab=[];
+        foreach($posts as $post){
+            //var_dump($post);die;
+            $tab["id"] = $post->getId();
+            $postManager->delete($tab['id']);
+        }
+        $topicManager->delete($_GET['id']);
+        
+        return [
+            "view" => VIEW_DIR."home.php",
+            "meta_description" => "page d'acceuil"
+        ];
+
+    }
+
+    public function deletePost(){
+        $topicManager = new TopicManager();
+        $postManager = new PostManager();
+        
+        //var_dump($_GET['id']);die;
+        $post = $postManager->findOneById($_GET['id']);
+        $tab['id']= $post->getId();
+        $tab['topic']= $post->getTopic();
+        //var_dump($tab['id']);die;
+        $postManager->delete($tab['id']);
+        $topic = $topicManager->findOneById($tab['topic']);
+        $posts = $postManager->findPostsByTopic($tab['topic']);
+        return [
+            "view" => VIEW_DIR."home.php",
+            "meta_description" => "page d'acceuil"
+        ];
+    }
+
     public function listTopicsByCategory($id) {
 
         $topicManager = new TopicManager();

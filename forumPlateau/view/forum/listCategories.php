@@ -10,6 +10,10 @@
 
 <?php
 foreach($categories as $category ){ ?>
+    <?php
+        if(App\Session::isAdmin()) { ?>
+            <P><a href='index.php?ctrl=forum&action=deleteCategory&id=<?=$category->getId() ?>'>delete</a></p>  
+        <?php } ?>
     <p><a href="index.php?ctrl=forum&action=listTopicsByCategory&id=<?= $category->getId() ?>"><?= $category->getName() ?></a></p>
 <?php }?>
 <?php

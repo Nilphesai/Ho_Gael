@@ -46,6 +46,12 @@ if(isset($topics)){
             </select>
                 </form>
         <?php } ?>
+        <?php
+        if(App\Session::isAdmin() || App\Session::getUser() == $topic->getUser()) { ?>
+            
+            <P><a href='index.php?ctrl=forum&action=deleteTopics&id=<?=$topic->getId()?>'>delete</a></p>    
+                
+        <?php } ?>
 
     </p>
     

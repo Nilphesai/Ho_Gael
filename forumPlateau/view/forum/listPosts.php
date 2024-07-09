@@ -21,6 +21,12 @@
         <tr>
 <?php
 foreach($posts as $post ){ ?>
+    <?php
+        if(App\Session::isAdmin() || App\Session::getUser() == $post->getUser()) { ?>
+            
+            <P><a href='index.php?ctrl=forum&action=deletePost&id=<?=$post->getId() ?>'>delete</a></p>    
+                
+        <?php } ?>
     <td>par <?= $post->getUser() ?> le <?= $post->getcreationDate() ?></td></br>
     <td><?= $post->getText() ?> </td></br></br>
     
