@@ -10,34 +10,37 @@
 
 <h1>Liste des posts</h1>
 
-    <tbody>
+    
     <?php 
     if((App\Session::getUser() == $topic->getUser() || App\Session::isAdmin()) && $topic->getClosed()==0 ){ ?>
-        <p><a href="index.php?ctrl=forum&action=lockTopic&id=<?= $topic->getId() ?>">Locked</a></p>
+        <p class=closed><a href="index.php?ctrl=forum&action=lockTopic&id=<?= $topic->getId() ?>">Locked</a></p>
     <?php }
     else if((App\Session::getUser() == $topic->getUser() || App\Session::isAdmin()) && $topic->getClosed()==1){?>
-        <p><a href="index.php?ctrl=forum&action=lockTopic&id=<?= $topic->getId() ?>">Unlocked</a></p>
+        <p class=closed><a href="index.php?ctrl=forum&action=lockTopic&id=<?= $topic->getId() ?>">Unlocked</a></p>
         <?php }?>
-        <tr>
-<?php
-foreach($posts as $post ){ ?>
+
+    <tr>
     <?php
-        if(App\Session::isAdmin() || App\Session::getUser() == $post->getUser()) { ?>
-            
-            <P><a href='index.php?ctrl=forum&action=deletePost&id=<?=$post->getId() ?>'>delete</a></p>    
+    foreach($posts as $post ){ ?>
+        <div class='lists'>
+        <?php
+            if(App\Session::isAdmin() || App\Session::getUser() == $post->getUser()) { ?>
                 
-        <?php } ?>
-    <td>par <?= $post->getUser() ?> le <?= $post->getcreationDate() ?></td></br>
-    <td><?= $post->getText() ?> </td></br></br>
-    
-<?php }?>
-</tr>
-</tbody>
+                <P><a href='index.php?ctrl=forum&action=deletePost&id=<?=$post->getId() ?>'>delete</a></p>    
+                    
+            <?php } ?>
+        <td>par <?= $post->getUser() ?> le <?= $post->getcreationDate() ?></td></br>
+        <td><?= $post->getText() ?> </td></br></br>
+        </div>
+    <?php }?>
+    </tr>
+
+
 <?php 
 if(($topic->getClosed() == 0 && App\Session::getUser()) || App\Session::isAdmin()){ ?>
     <h1>nouveau Post</h1>
 
-    <form id="formPrincipal" action="index.php?ctrl=forum&action=addPost&id=<?=$topic->getId()?>" method="post">
+    <form id="formAdd" action="index.php?ctrl=forum&action=addPost&id=<?=$topic->getId()?>" method="post">
         <p>
             <label>
                 Post :

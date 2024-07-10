@@ -1,9 +1,54 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+html {
+    display: flex;
+    
+    background-color: rgb(232, 157, 19);
+    
+}
+
+#wrapper{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}
+#forum{
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(7, 79, 7);
+    color: white;
+    
+}
+#formPrincipal{
+    display: flex;
+    flex-direction: column;
+    min-width:200px;
+	min-height:150px;
+    background-color: green;
+    color: white;
+    
+}
+header{
+    display: flex;
+    
+    justify-content: center;
+    background-color: rgb(139, 110, 16);
+}
+header a{
+    color: white;
+}
+.lists{
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    background-color: rgb(166, 121, 32);
+}
+
+nav{
+    display: flex;
+    
 }
 
 h1 {
     color: rgb(0, 122, 156);
 }
+
