@@ -1,20 +1,20 @@
-html {
-    display: flex;
-    justify-content: center;
-}
-
 #wrapper{
     display: flex;
-    justify-content: center;
     flex-direction: column;
+}
+#home{
     text-align: center;
 }
-#forum{
+.forum{
     display: flex;
-    flex-direction: column;
+}
+
+p a{
     color: white;
 }
 
 footer{
-    background-color: brown;
+    background-color: rgb(98, 98, 247);
+    color: white;
+    text-align: center;
 }
