@@ -1,9 +1,11 @@
 <?php
     $user = $result["data"]['user']; 
 ?>
-
-<h1>Mon profil</h1>
-
-    <p>Pseudo : <?=$user->getNickName()?></p>
-    <p>Email : <?=$user->getEmail()?></p>
-    <p>date d'inscription : <?=$user->getSignDate()?></p>
+<div class="jumbotron">
+<h1 class="display-3">Mon profil</h1>
+    <div>
+    <p class="lead">Pseudo : <?=$user->getNickName()?></p>
+    <p class="lead">Email : <?=$user->getEmail()?></p>
+    <p class="lead">date d'inscription : <?=$user->getSignDate()?></p>
+    </div>
+</div>
