@@ -13,6 +13,10 @@ p a{
     color: white;
 }
 
+p .listUsers{
+    color: rgb(13, 28, 238);
+}
+
 footer{
     background-color: rgb(98, 98, 247);
     color: white;

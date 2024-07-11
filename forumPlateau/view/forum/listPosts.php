@@ -18,10 +18,11 @@
     else if((App\Session::getUser() == $topic->getUser() || App\Session::isAdmin()) && $topic->getClosed()==1){?>
         <p class="btn btn-primary" class=closed><a href="index.php?ctrl=forum&action=lockTopic&id=<?= $topic->getId() ?>">Unlocked</a></p>
         <?php }?>
-<div class="card text-white bg-primary mb-3" >
+
     
     <?php
     foreach($posts as $post ){ ?>
+    <div class="card text-white bg-primary mb-3" >
         <div class="card-header">
         <?php
             if(App\Session::isAdmin() || App\Session::getUser() == $post->getUser()) { ?>
@@ -35,9 +36,10 @@
         <div class="card-body">
         <p class="card-text"><?= $post->getText() ?> </p>
         </div>
+        </div>
     <?php }?>
     
-</div>
+
 <?php 
 if(($topic->getClosed() == 0 && App\Session::getUser()) || App\Session::isAdmin()){ ?>
     <div class="card border-primary mb-3" style="max-width: 20rem;">

@@ -6,6 +6,6 @@
 
 <?php
 foreach($users as $user ){ ?>
-    <p class="lead"><a href="index.php?ctrl=security&action=profile&id=<?= $user->getId() ?>"><?= $user->getNickName() ?></a></p>
+    <p class="lead"><a class="listUsers" href="index.php?ctrl=security&action=profile&id=<?= $user->getId() ?>"><?= $user->getNickName() ?></a></p>
 <?php }?>
 </div>
