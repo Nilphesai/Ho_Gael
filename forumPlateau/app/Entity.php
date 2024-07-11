@@ -2,7 +2,7 @@
 namespace App;
 
 abstract class Entity{
-    //deserialisation de l'objet
+    //deserialisation de l'objet, mettre les donnée de la base de donnée dans l'objet
     protected function hydrate($data){
 
         foreach($data as $field => $value){
