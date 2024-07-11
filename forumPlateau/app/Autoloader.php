@@ -6,7 +6,7 @@ class Autoloader{
 	public static function register(){
 		spl_autoload_register(array(__CLASS__, 'autoload'));
 	}
-
+	//chargement des classe nécéssaire pour utilisation
 	public static function autoload($class){
 
 		//$class = Model\Managers\TopicManager (FullyQualifiedClassName)
