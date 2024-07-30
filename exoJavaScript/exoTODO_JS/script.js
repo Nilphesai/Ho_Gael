@@ -12,7 +12,7 @@ function countTask(){
     const countCard = document.querySelector('#count'); //l'element count
     const listTask = tasksContainer.querySelectorAll('.todoCard');//tous les todoCard dans tasksContainer
     for (let i = 1;i <= listTask.length;i++){//pour tous les element de listTask
-        countCard.innerHTML = "task = "+i; //écrire dans countCard
+        countCard.textContent = "task = "+i; //écrire dans countCard
     }
 }
 
