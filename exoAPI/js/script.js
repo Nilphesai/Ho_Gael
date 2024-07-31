@@ -31,20 +31,33 @@ inputCP.addEventListener("input", () => {
         })
 })
 
+//ajouter un écouteur d'évènement "change (modification du champs) au champ de ville
 selectVille.addEventListener("change", () => {
+    //vérifie si le conteneur n'est pas vide, si non vide, le vidé
+    var container = L.DomUtil.get('map');
+    if(container != null){
+        container._leaflet_id = null;
+    }
+    //initialisé map
+    var map = L.map('map')
+    //récup code postal et ville
     let value = inputCP.value
     var ville = selectVille.options[selectVille.selectedIndex].text;
+    //récupéré coordonée de la ville et du codepostal entrée en paramètre 
     fetch(`https://api-adresse.data.gouv.fr/search/?q=${ville}&postcode=${value}`)
     .then(response => response.json())
     .then(data => {
+        //si il y a des donnée, récupéré les donnée qui nous interesse (latitude et longitude)
         if (data.features && data.features.length > 0) {
             var coordinates = data.features[0].geometry.coordinates;
             var latitude = coordinates[1];
             var longitude = coordinates[0];
-            var map = L.map('map').setView([latitude, longitude], 13);
+            map.setView([latitude, longitude], 13);
+            //affichage map
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '© OpenStreetMap contributors'
             }).addTo(map);
+        //si pas de donnée
         } else {
             console.error("Aucune coordonnée trouvée pour cette adresse.");
         }
